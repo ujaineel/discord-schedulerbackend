@@ -7,6 +7,6 @@ module.exports = {
 
     // Run the eslint.
     // Anonymous function means: "Do not pass args to the command."
-    () => "npx eslint --noEmit",
+    () => "eslint",
   ],
 };
