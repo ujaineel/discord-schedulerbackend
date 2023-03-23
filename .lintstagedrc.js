@@ -5,8 +5,8 @@ module.exports = {
     // Execute tests related to the staged files.
     "npm run test -- --passWithNoTests --bail --findRelatedTests",
 
-    // Run the typechecker.
+    // Run the eslint.
     // Anonymous function means: "Do not pass args to the command."
-    () => "tsc --noEmit",
+    () => "npx eslint --noEmit",
   ],
 };
