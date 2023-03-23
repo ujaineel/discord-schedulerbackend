@@ -2,4 +2,5 @@
 
 . "$(dirname "$0")/_/husky.sh"
 
-echo "the pre-commit hook ran 🚀"
+npx pretty-quick --staged
+npx lint-staged
