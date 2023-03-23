@@ -1,0 +1,42 @@
+{
+    "jsc": {
+      "parser": {
+        "syntax": "typescript",
+        "tsx": false,
+        "decorators": true,
+        "dynamicImport": true
+      },
+      "target": "es2020",
+      "paths": {
+        "@routes/*": [
+            "./src/routes/*"
+          ],
+          "@middlewares/*": [
+            "./src/middlewares/*"
+          ],
+          "@controllers/*": [
+            "./src/controllers/*"
+          ],
+          "@configs/*": [
+            "./src/configs/*"
+          ],
+          "@models/*": [
+            "./src/models/*"
+          ],
+          "@utils/*": [
+            "./src/utils/*"
+          ],
+          "@test/unit/*": [
+            "./test/unit/*"
+          ],
+          "@root/*": [
+            "./*"
+          ]
+      },
+      "baseUrl": "."
+    },
+    "module": {
+      "type": "commonjs"
+    }
+  }
+  
