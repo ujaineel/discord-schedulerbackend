@@ -1,11 +1,11 @@
 import express from "express";
-import dotenv from "dotenv";
+import { config } from "dotenv";
+config({ path: `./configs/env/.env.${process.env.NODE_ENV}` });
+
 import morgan from "morgan";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
 import apiDoc from "./api-docs/basicInfo";
-
-dotenv.config({ path: `./env/.env.${process.env.NODE_ENV}` });
 
 import { appPort } from "@configs/app.config";
 import metaRoutes from "@routes/meta.routes";
