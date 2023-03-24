@@ -10,5 +10,24 @@ module.exports = {
     sourceType: "module",
     project: ["./tsconfig.json"],
   },
-  rules: {},
+  rules: {
+    "no-unused-vars": "off",
+    "unused-imports/no-unused-imports": "error",
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        checksVoidReturn: false,
+      },
+    ],
+    "unused-imports/no-unused-vars": [
+      "warn",
+      {
+        vars: "all",
+        varsIgnorePattern: "^_",
+        args: "after-used",
+        argsIgnorePattern: "^_",
+      },
+    ],
+  },
+  plugins: ["unused-imports"],
 };

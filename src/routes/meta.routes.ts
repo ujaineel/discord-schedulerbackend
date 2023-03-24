@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { type Request, type Response, Router } from "express";
 import { routerConfig } from "@configs/app.config";
 import { RESPONSE_CODE } from "@utils/types/response.types";
 

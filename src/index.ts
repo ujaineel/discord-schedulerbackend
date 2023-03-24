@@ -1,17 +1,17 @@
-import express, { Response } from "express";
+import express, { type Response } from "express";
 import { config } from "dotenv";
-config({ path: `./configs/env/.env.${process.env.NODE_ENV}` });
 
 import morgan from "morgan";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
 import apiDoc from "./api-docs/basicInfo";
 
-import { appPort } from "@configs/app.config";
+import { appPort, env } from "@configs/app.config";
 import metaRoutes from "@routes/meta.routes";
 import taskRoutes from "@routes/task.routes";
 
 import { showApiDocs } from "@middlewares/misc/misc.middleware";
+config({ path: `./configs/env/.env.${env}` });
 
 export const app = express();
 
