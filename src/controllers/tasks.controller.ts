@@ -2,7 +2,7 @@ import { prismaClient } from "@configs/db.config";
 import { Task } from "@prisma/client";
 import { RESPONSE_CODE } from "@utils/types/response.types";
 import { Request, Response } from "express";
-import { isEmpty, isString } from "lodash";
+import { isEmpty, isNull, isString } from "lodash";
 
 const getTask = async (req: Request, res: Response) => {
   const id = req.params?.id;
@@ -17,7 +17,7 @@ const getTask = async (req: Request, res: Response) => {
       where: { id },
     });
 
-    if (!task) {
+    if (!isNull(task)) {
       return res.status(RESPONSE_CODE.NO_CONTENT).send("Task not found");
     }
   } catch (error) {
