@@ -31,7 +31,7 @@ model Task {
 }
 
 model Profile {
-  id     String     @default(uuid())
+  id     String     @id @default(uuid())
   bio    String?
   type   UserType @default(LOCAL)
   user   User    @relation(fields: [userId], references: [id])

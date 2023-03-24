@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Response } from "express";
 import { config } from "dotenv";
 config({ path: `./configs/env/.env.${process.env.NODE_ENV}` });
 
@@ -9,6 +9,7 @@ import apiDoc from "./api-docs/basicInfo";
 
 import { appPort } from "@configs/app.config";
 import metaRoutes from "@routes/meta.routes";
+import taskRoutes from "@routes/task.routes";
 
 import { showApiDocs } from "@middlewares/misc/misc.middleware";
 
@@ -20,6 +21,11 @@ app.use(morgan("dev"));
 app.use(cors());
 
 app.use("/meta", metaRoutes);
+app.use("/tasks", taskRoutes);
+app.get("/ping", (_, res: Response) => {
+  res.send("pong");
+});
+
 app.use("/api-docs", showApiDocs, swaggerUI.serve, swaggerUI.setup(apiDoc));
 
 const start = async (): Promise<void> => {

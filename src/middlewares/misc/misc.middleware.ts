@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { env } from "@configs/app.config";
-import { RESPONSE_CODE } from "@utils/types/ResponseCode";
+import { RESPONSE_CODE } from "@utils/types/response.types";
 
 export const showApiDocs = (
   req: Request,
