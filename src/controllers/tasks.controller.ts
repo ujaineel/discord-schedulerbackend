@@ -19,7 +19,7 @@ const getTask = async (req: Request, res: Response): Promise<void> => {
     });
 
     if (isEmpty(task)) {
-      res.status(RESPONSE_CODE.NO_CONTENT).json("Task not found");
+      res.status(RESPONSE_CODE.NO_CONTENT);
       return;
     }
 
