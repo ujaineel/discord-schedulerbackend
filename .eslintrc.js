@@ -13,6 +13,11 @@ module.exports = {
   rules: {
     "no-unused-vars": "off",
     "unused-imports/no-unused-imports": "error",
+    quotes: "off",
+    "comma-dangle": "off",
+    "@typescript-eslint/comma-dangle": "off",
+    "@typescript-eslint/quotes": "off",
+    "@typescript-eslint/semi": "off",
     "@typescript-eslint/no-misused-promises": [
       "error",
       {
