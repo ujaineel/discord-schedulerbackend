@@ -19,11 +19,12 @@ const getTask = async (req: Request, res: Response): Promise<void> => {
     });
 
     if (isEmpty(task)) {
-      res.status(RESPONSE_CODE.NO_CONTENT);
+      res.status(RESPONSE_CODE.NO_CONTENT).json(null);
       return;
     }
 
     res.status(RESPONSE_CODE.OK).json(task);
+    return;
   } catch (error) {
     res
       .status(RESPONSE_CODE.INTERNAL_SERVER_ERROR)

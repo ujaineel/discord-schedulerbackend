@@ -11,6 +11,7 @@ import metaRoutes from "@routes/meta.routes";
 import taskRoutes from "@routes/task.routes";
 
 import { showApiDocs } from "@middlewares/misc/misc.middleware";
+
 config({ path: `./configs/env/.env.${env}` });
 
 export const app = express();
