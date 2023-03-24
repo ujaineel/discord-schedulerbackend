@@ -12,7 +12,7 @@ import metaRoutes from "@routes/meta.routes";
 
 import { showApiDocs } from "@middlewares/misc/misc.middleware";
 
-export const app = express();
+const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
