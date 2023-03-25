@@ -1,8 +1,18 @@
 import request from "supertest";
-import { app } from "../../src/index";
-import { RESPONSE_CODE } from "../../src/utils/types/response.types";
+import server, { app } from "../../../src/index";
+import { RESPONSE_CODE } from "../../../src/utils/types/response.types";
 
 describe("meta routes", () => {
+  beforeAll((done) => {
+    done();
+  });
+
+  afterAll((done) => {
+    // Closing the DB connection allows Jest to exit successfully.
+    server.close();
+    done();
+  });
+
   describe("GET /meta", () => {
     it("should return ok and 200 Ok status", async () => {
       const { status, text }: { status: number; text: string } = await request(

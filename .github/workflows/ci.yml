@@ -2,6 +2,7 @@
 name: CI
 env:
   NODE_ENV: development
+  DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
 
 on:
   push:

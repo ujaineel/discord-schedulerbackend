@@ -11,6 +11,10 @@
 #
 name: "CodeQL"
 
+env:
+  NODE_ENV: ci
+  DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
+
 on:
   push:
     branches: ["main", develop, testing]

@@ -10,6 +10,7 @@ import { appPort, env } from "@configs/app.config";
 import routes from "@routes/index";
 
 import { showApiDocs } from "@middlewares/misc/misc.middleware";
+import { type Server } from "http";
 
 // Falls back to dotenv.config if issues, so sending path as well.
 config({ path: `../env/.env.${env}` });
@@ -33,15 +34,18 @@ app.use(
   swaggerUI.setup(swaggerOutput)
 );
 
-const start = async (): Promise<void> => {
+const start = (): Server => {
   try {
-    app.listen(appPort, () => {
+    const server = app.listen(appPort, () => {
       console.log(`Server started on port ${appPort}`);
     });
+
+    return server;
   } catch (error) {
     console.error(error);
     process.exit(1);
   }
 };
 
-void start();
+const server = start();
+export default server;

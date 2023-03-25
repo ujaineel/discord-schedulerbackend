@@ -1,6 +1,10 @@
 # https://github.com/barecheck/code-coverage-action
 name: Code Coverage
 
+env:
+  NODE_ENV: ci
+  DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
+
 on: [pull_request]
 
 concurrency:

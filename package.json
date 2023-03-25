@@ -18,7 +18,9 @@
     "migrate:diff:dev": "dotenv -e ./env/.env.local -- npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script > ./prisma/migrations/000000000000_squashed_migrations/migration.sql",
     "migrate:resolve:dev": "dotenv -e ./env/.env.local -- npx prisma migrate resolve --applied 000000000000_squashed_migrations",
     "test": "jest",
-    "swagger": "ts-node ./src/api-docs/swagger.mjs"
+    "swagger": "ts-node ./src/api-docs/swagger.mjs",
+    "test:unit": "jest --testPathPattern=/test/unit --passWithNoTests",
+    "test:integration": "jest  --testPathPattern=test/integration --passWithNoTests"
   },
   "keywords": [],
   "author": "",
