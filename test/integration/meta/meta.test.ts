@@ -1,6 +1,6 @@
 import request from "supertest";
 import { app } from "../../src/index";
-import { RESPONSE_CODE } from "../../src/utils/types/ResponseCode";
+import { RESPONSE_CODE } from "../../src/utils/types/response.types";
 
 describe("meta routes", () => {
   describe("GET /meta", () => {

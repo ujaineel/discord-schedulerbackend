@@ -1,5 +1,5 @@
 import express, { type Response } from "express";
-import { config } from "dotenv";
+import { config } from "dotenv-vault-core";
 
 import morgan from "morgan";
 import cors from "cors";
@@ -11,7 +11,8 @@ import routes from "@routes/index";
 
 import { showApiDocs } from "@middlewares/misc/misc.middleware";
 
-config({ path: `./configs/env/.env.${env}` });
+// Falls back to dotenv.config if issues, so sending path as well.
+config({ path: `../env/.env.${env}` });
 
 export const app = express();
 

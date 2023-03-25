@@ -1,5 +1,5 @@
 export enum ENV {
-  LOCAL = "local",
+  LOCAL = "ci",
   DEVELOPMENT = "development",
   TESTING = "testing",
   PRODUCTION = "production",
