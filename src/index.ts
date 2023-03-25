@@ -1,19 +1,17 @@
 import express, { type Response } from "express";
-import { config } from "dotenv-vault-core";
 
 import morgan from "morgan";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
 import swaggerOutput from "@root/swaggerOutput.json";
 
-import { appPort, env } from "@configs/app.config";
+import { appPort } from "@configs/app.config";
 import routes from "@routes/index";
 
 import { showApiDocs } from "@middlewares/misc/misc.middleware";
 import { type Server } from "http";
 
 // Falls back to dotenv.config if issues, so sending path as well.
-config({ path: `../env/.env.${env}` });
 
 export const app = express();
 
