@@ -13,10 +13,12 @@
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts src --fix",
     "prepare": "is-ci || husky install",
+    "migrate:prisma:push": "dotenv -e ./env/.env.local -- npx prisma db push --preview-feature",
     "migrate:prisma:dev": "dotenv -e ./env/.env.local -- npx prisma migrate dev --preview-feature",
     "migrate:diff:dev": "dotenv -e ./env/.env.local -- npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script > ./prisma/migrations/000000000000_squashed_migrations/migration.sql",
     "migrate:resolve:dev": "dotenv -e ./env/.env.local -- npx prisma migrate resolve --applied 000000000000_squashed_migrations",
-    "test": "jest --watchAll --detectOpenHandles"
+    "test": "jest --watchAll --detectOpenHandles",
+    "swagger": "ts-node ./src/api-docs/swagger.mjs"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +32,7 @@
     "morgan": "^1.10.0",
     "nanoid": "^4.0.1",
     "supertest": "^6.3.3",
+    "swagger-autogen": "^2.23.1",
     "swagger-ui-express": "^4.6.2"
   },
   "devDependencies": {

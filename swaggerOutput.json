@@ -1,0 +1,133 @@
+{
+  "swagger": "2.0",
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Discord Scheduler API",
+    "description": "A discord-based task scheduling API",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Jaineel Upadhyay"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8081/",
+      "description": "Local server"
+    },
+    {
+      "url": "https://api_url_testing",
+      "description": "Testing server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Meta",
+      "description": "Misc. operations"
+    },
+    {
+      "name": "Tasks",
+      "description": "Operations related to Tasks"
+    }
+  ],
+  "paths": {
+    "/ping": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/meta/": {
+      "get": {
+        "tags": ["Meta"],
+        "summary": "Meta Route",
+        "description": "",
+        "operationId": "meta",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "ok"
+          }
+        }
+      }
+    },
+    "/tasks/{id}": {
+      "get": {
+        "tags": ["Tasks"],
+        "summary": "Fetch Single Task Using ID",
+        "description": "",
+        "operationId": "getTask",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Task Found",
+            "schema": {
+              "$ref": "#/components/schemas/Task"
+            }
+          },
+          "204": {
+            "description": "No Task Found."
+          },
+          "400": {
+            "description": "Bad Request. Please check if id is provided"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Task": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "datetime"
+          },
+          "updatedAt": {
+            "type": "datetime"
+          },
+          "deletedAt": {
+            "type": "datetime"
+          },
+          "published": {
+            "type": "boolean"
+          },
+          "userId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "createdAt",
+          "updatedAt",
+          "title",
+          "published",
+          "userId"
+        ]
+      }
+    }
+  }
+}

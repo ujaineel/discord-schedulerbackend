@@ -4,11 +4,10 @@ import { config } from "dotenv";
 import morgan from "morgan";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
-import apiDoc from "./api-docs/basicInfo";
+import swaggerOutput from "@root/swaggerOutput.json";
 
 import { appPort, env } from "@configs/app.config";
-import metaRoutes from "@routes/meta.routes";
-import taskRoutes from "@routes/task.routes";
+import routes from "@routes/index";
 
 import { showApiDocs } from "@middlewares/misc/misc.middleware";
 
@@ -21,13 +20,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 app.use(cors());
 
-app.use("/meta", metaRoutes);
-app.use("/tasks", taskRoutes);
+app.use(routes);
 app.get("/ping", (_, res: Response) => {
   res.send("pong");
 });
 
-app.use("/api-docs", showApiDocs, swaggerUI.serve, swaggerUI.setup(apiDoc));
+app.use(
+  "/api-docs",
+  showApiDocs,
+  swaggerUI.serve,
+  swaggerUI.setup(swaggerOutput)
+);
 
 const start = async (): Promise<void> => {
   try {

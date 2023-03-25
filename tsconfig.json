@@ -5,16 +5,13 @@
     "allowJs": true,
     "removeComments": true,
     "resolveJsonModule": true,
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
+    "typeRoots": ["./node_modules/@types"],
     "sourceMap": true,
     "outDir": "dist",
     "strict": true,
-    "lib": [
-      "ES2020"
-    ],
+    "lib": ["ES2020"],
     "baseUrl": ".",
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -22,34 +19,16 @@
     "moduleResolution": "Node",
     "skipLibCheck": true,
     "paths": {
-      "@routes/*": [
-        "src/routes/*"
-      ],
-      "@middlewares/*": [
-        "src/middlewares/*"
-      ],
-      "@controllers/*": [
-        "src/controllers/*"
-      ],
-      "@configs/*": [
-        "src/configs/*"
-      ],
-      "@models/*": [
-        "src/models/*"
-      ],
-      "@utils/*": [
-        "src/utils/*"
-      ],
-      "@test/unit/*": [
-        "test/unit/*"
-      ],
-      "@root/*": [
-        "./*"
-      ],
+      "@routes/*": ["src/routes/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@controllers/*": ["src/controllers/*"],
+      "@configs/*": ["src/configs/*"],
+      "@models/*": ["src/models/*"],
+      "@utils/*": ["src/utils/*"],
+      "@test/unit/*": ["test/unit/*"],
+      "@root/*": ["./*"]
     }
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": ["node_modules"],
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
 }
