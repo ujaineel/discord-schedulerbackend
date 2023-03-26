@@ -12,10 +12,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
-defaults:
-  run:
-    working-directory: ../../
-
 jobs:
   base_branch_cov:
     runs-on: ubuntu-latest
@@ -32,6 +28,7 @@ jobs:
         run: npm install
 
       - name: Run test coverage
+        working-directory: ./
         run: npm run test:cov
 
       - name: Upload code coverage for ref branch
@@ -60,7 +57,7 @@ jobs:
 
       - name: Run test coverage
         with:
-          working-directory:
+          working-directory: ./
         run: npm run test:cov
 
       #  Compares two code coverage files and generates report as a comment
