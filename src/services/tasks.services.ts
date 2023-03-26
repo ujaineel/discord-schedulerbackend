@@ -16,7 +16,7 @@ export const getTask = async (id: string): Promise<Task | null> => {
     return task;
   } catch (error: any) {
     // #swagger.responses[500] = { description: 'Internal Server Error' }
-    console.error(error.message, error.stack);
+    console.log(error?.message, error?.stack);
     throw new Error(error.message);
   }
 };

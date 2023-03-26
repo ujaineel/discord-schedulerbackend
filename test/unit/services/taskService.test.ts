@@ -27,7 +27,7 @@ describe("Task Service", () => {
       expect(task).toEqual(null);
     });
 
-    it("should throw an error if someething happens", async () => {
+    it("should throw an error if something happens", async () => {
       prismaMock.task.findFirst.mockRejectedValue(null);
 
       let error;
