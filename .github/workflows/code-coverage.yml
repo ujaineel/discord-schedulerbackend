@@ -55,7 +55,7 @@ jobs:
         run: npm install
 
       - name: Pull environment variables
-        run: npx dotenv-vault pull staging
+        run: npx dotenv-vault pull staging && dotenv -e ./.env.staging
 
       - name: Run test coverage
         run: npm run test:cov
