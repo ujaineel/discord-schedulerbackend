@@ -54,6 +54,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Pull environment variables
+        run: npx dotenv-vault pull staging
+
       - name: Run test coverage
         run: npm run test:cov
 

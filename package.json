@@ -25,7 +25,7 @@
     "test:unit:watch": "jest --watchAll --testPathPattern=/test/unit --passWithNoTests",
     "testenv:integration": "NODE_ENV=testing dotenv -e ./env/.env.testing -- concurrently \"npm run docker:up\" \"npx prisma migrate deploy\" \"jest  --testPathPattern=test/integration --maxWorkers=1 --passWithNoTests\"",
     "test:integration:watch": "jest --watchAll --testPathPattern=/test/integration --passWithNoTests",
-    "test:cov": "concurrently \"npm run test:unit\" \"npm run testenv:integration\""
+    "test:cov": "concurrently \"npm run test:unit\" \"dotenv -e ./env\" \"npm run docker:up\" \"npx prisma migrate deploy\" \"jest  --testPathPattern=test/integration --maxWorkers=1 --passWithNoTests\""
   },
   "keywords": [],
   "author": "",
