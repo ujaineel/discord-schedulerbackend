@@ -1,23 +1,21 @@
-import { getTaskController } from "@controllers/tasks.controllers";
 import { prismaMock } from "@root/test/helper/singleton";
+import { getTaskController } from "@controllers/tasks.controllers";
 import httpMocks from "node-mocks-http";
+import { RESPONSE_CODE } from "@utils/types/response.types";
 
 describe("Tasks Controllers - Unit", () => {
-  it("should return with 500 response code if an exception occurs", async () => {
-    let err: any;
-    prismaMock.task.findFirst.mockRejectedValue(null);
+  beforeEach(() => {
+    prismaMock.task.findFirst.mockRejectedValue(new Error("Rejected Value"));
+  });
 
+  it("should return with 500 response code if an exception occurs", async () => {
     const req = httpMocks.createRequest({
       params: { id: "3142fa93-b2c2-4562-a35b-579d683524d4" },
     });
     const res = httpMocks.createResponse();
-    try {
-      await getTaskController(req, res);
-    } catch (error) {
-      err = error;
-    }
 
-    expect(err).toBeDefined();
-    expect(res.statusCode).toBeNull();
+    await getTaskController(req, res);
+
+    expect(res.statusCode).toBe(RESPONSE_CODE.INTERNAL_SERVER_ERROR);
   });
 });

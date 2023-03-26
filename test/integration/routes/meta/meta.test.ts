@@ -1,6 +1,6 @@
 import request from "supertest";
-import server, { app } from "../../../src/index";
-import { RESPONSE_CODE } from "../../../src/utils/types/response.types";
+import server, { app } from "../../../../src/index";
+import { RESPONSE_CODE } from "../../../../src/utils/types/response.types";
 
 describe("meta routes", () => {
   beforeAll((done) => {

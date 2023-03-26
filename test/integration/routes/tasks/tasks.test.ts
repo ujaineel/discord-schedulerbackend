@@ -1,7 +1,7 @@
 import request from "supertest";
 import server, { app } from "@root/src";
 import { RESPONSE_CODE } from "@utils/types/response.types";
-import taskFixture from "../../helper/fixtures/tasks/taskFixture.json";
+import taskFixture from "../../../helper/fixtures/tasks/taskFixture.json";
 
 describe("Tasks routes", () => {
   beforeAll((done) => {
