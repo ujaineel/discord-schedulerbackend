@@ -26,8 +26,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Pull environment variables
-        run: npx dotenv-vault pull staging && dotenv -e ./.env.staging
+      - name: Run Build
+        run: npm run build
         env:
           DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
 
@@ -59,12 +59,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Pull environment variables
-        run: npx dotenv-vault pull staging && dotenv -e ./.env.staging
+      - name: Run Build
+        run: npm run build
         env:
           DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
 
-      - name: Run test coverage
+      - name: Run build and test coverage
         run: npm run test:cov
 
       #  Compares two code coverage files and generates report as a comment
