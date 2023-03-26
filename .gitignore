@@ -10,3 +10,5 @@ dist/
 !.env.vault
 
 .vscode/
+
+coverage/
