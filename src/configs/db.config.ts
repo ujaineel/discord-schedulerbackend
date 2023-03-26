@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { ENV } from "@utils/types/app.types";
 import { env } from "./app.config";
 
-export const prismaClient = new PrismaClient({
+const prismaClient = new PrismaClient({
   log: ["query", "info"],
   errorFormat: env === ENV.LOCAL ? "pretty" : undefined,
   datasources: {
@@ -11,3 +11,5 @@ export const prismaClient = new PrismaClient({
     },
   },
 });
+
+export default prismaClient;
