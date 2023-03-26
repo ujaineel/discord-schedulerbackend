@@ -28,7 +28,7 @@ jobs:
         run: npm install
 
       - name: Run test coverage
-        run: npm run test:cov
+        run: npm run
 
       - name: Upload code coverage for ref branch
         uses: actions/upload-artifact@v2
@@ -55,7 +55,7 @@ jobs:
         run: npm install
 
       - name: Run test coverage
-        run: npm run test:cov
+        run: npm run
 
       #  Compares two code coverage files and generates report as a comment
       - name: Generate Code Coverage report
