@@ -68,6 +68,8 @@ jobs:
 
       - name: Run build and test coverage
         run: npm run test:cov
+        env:
+          APP_DATABASE_URL: ${{ secrets.APP_DATABASE_URL }}
 
       #  Compares two code coverage files and generates report as a comment
       - name: Generate Code Coverage report
