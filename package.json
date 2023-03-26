@@ -20,7 +20,8 @@
     "test": "jest",
     "swagger": "ts-node ./src/api-docs/swagger.mjs",
     "test:unit": "jest --testPathPattern=/test/unit --passWithNoTests",
-    "test:integration": "jest  --testPathPattern=test/integration --passWithNoTests"
+    "test:integration": "jest  --testPathPattern=test/integration --passWithNoTests",
+    "test:cov": "jest --coverage --testPathPattern=/test/unit"
   },
   "keywords": [],
   "author": "",
