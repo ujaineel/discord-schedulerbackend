@@ -18,6 +18,8 @@ module.exports = {
     "@typescript-eslint/comma-dangle": "off",
     "@typescript-eslint/quotes": "off",
     "@typescript-eslint/semi": "off",
+    indent: "off",
+    "@typescript-eslint/indent": "off",
     "@typescript-eslint/no-misused-promises": [
       "error",
       {

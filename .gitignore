@@ -8,3 +8,7 @@ dist/
 .flaskenv*
 !.env.project
 !.env.vault
+
+.vscode/
+
+coverage/

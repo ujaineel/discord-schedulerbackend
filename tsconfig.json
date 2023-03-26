@@ -25,7 +25,6 @@
       "@configs/*": ["src/configs/*"],
       "@models/*": ["src/models/*"],
       "@utils/*": ["src/utils/*"],
-      "@test/unit/*": ["test/unit/*"],
       "@root/*": ["./*"]
     }
   },
