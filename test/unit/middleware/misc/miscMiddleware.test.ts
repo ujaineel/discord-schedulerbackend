@@ -41,7 +41,7 @@ describe("Misc Middlewares", () => {
       const { showApiDocs } = await import("@middlewares/misc/misc.middleware");
 
       showApiDocs(req, res, nextFn);
-      expect(nextFn).toHaveBeenCalled();
+      expect(nextFn).not.toHaveBeenCalled();
     });
   });
 });
