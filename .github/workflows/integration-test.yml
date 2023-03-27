@@ -44,4 +44,5 @@ jobs:
           npx prisma db push
           npm run test:integration
         env:
+          DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
           DATABASE_URL: ${{ secrets.APP_DATABASE_URL }}
