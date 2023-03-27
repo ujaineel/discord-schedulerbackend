@@ -2,13 +2,12 @@
 import prismaClient from "@configs/db.config";
 import { prismaMock } from "@root/test/helper/singleton";
 import httpMocks from "node-mocks-http";
-import sinon from "sinon";
 
 describe("Misc Middlewares", () => {
   describe("showApiDocs", () => {
     const req = httpMocks.createRequest();
     const res = httpMocks.createResponse();
-    const nextFn = sinon.stub();
+    const nextFn = jest.fn();
     const env = process.env;
 
     beforeEach(() => {
@@ -18,7 +17,6 @@ describe("Misc Middlewares", () => {
 
     afterEach(() => {
       process.env = env;
-      nextFn.reset();
     });
 
     afterAll(async () => {
@@ -33,7 +31,7 @@ describe("Misc Middlewares", () => {
       const { showApiDocs } = await import("@middlewares/misc/misc.middleware");
 
       showApiDocs(req, res, nextFn);
-      expect(nextFn.called).toBeTruthy();
+      expect(nextFn).toHaveBeenCalled();
     });
 
     it("should return NOT_FOUND if env is production", async () => {
@@ -43,7 +41,7 @@ describe("Misc Middlewares", () => {
       const { showApiDocs } = await import("@middlewares/misc/misc.middleware");
 
       showApiDocs(req, res, nextFn);
-      expect(nextFn.called).toBeFalsy();
+      expect(nextFn).toHaveBeenCalled();
     });
   });
 });
