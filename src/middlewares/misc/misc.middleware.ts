@@ -11,6 +11,6 @@ export const showApiDocs = (
   if (env !== ENV.PRODUCTION) {
     next();
   } else {
-    return res.status(RESPONSE_CODE.NOT_FOUND).send();
+    return res.status(RESPONSE_CODE.NOT_FOUND).json();
   }
 };

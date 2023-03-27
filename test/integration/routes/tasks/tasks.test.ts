@@ -37,10 +37,10 @@ describe("Tasks routes", () => {
       const { statusCode, text }: { statusCode: number; text: any } =
         await request(app).get(`/tasks/${validId}`);
 
-      const data = JSON.parse(text)?.data;
+      const parsedText = JSON.parse(text);
 
       expect(statusCode).toEqual(RESPONSE_CODE.OK);
-      expect(data).toStrictEqual(taskFixture);
+      expect(parsedText?.data).toEqual(taskFixture);
     });
   });
 });

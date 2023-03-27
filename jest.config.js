@@ -1,7 +1,7 @@
 module.exports = {
   preset: "ts-jest",
   testEnvironment: "node",
-  setupFiles: ["dotenv/config"],
+  setupFiles: ["./test/helper/setup-tests.ts"],
   clearMocks: true,
   moduleFileExtensions: ["ts", "js", "node"],
   roots: ["<rootDir>/src", "<rootDir>/test"],
