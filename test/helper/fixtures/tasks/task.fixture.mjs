@@ -1,4 +1,4 @@
-import { faker } from "@faker-js/faker";
+const { faker } = require("@faker-js/faker");
 
 // Storing one as default fixture, but creating this function just in case if needed.
 export const createTaskFixture = () => {
