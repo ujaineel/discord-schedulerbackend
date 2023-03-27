@@ -2,15 +2,22 @@ import request from "supertest";
 import server, { app } from "@root/src";
 import { RESPONSE_CODE } from "@utils/types/response.types";
 import taskFixture from "../../../helper/fixtures/tasks/taskFixture.json";
+import main from "@root/test/helper/setup/setup-db";
+import prismaClient from "@configs/db.config";
 
 describe("Tasks routes", () => {
   beforeAll((done) => {
     done();
   });
 
-  afterAll((done) => {
+  beforeEach(async () => {
+    await prismaClient.task.deleteMany();
+    await main();
+  });
+
+  afterAll(async () => {
+    await prismaClient.$disconnect();
     server.close();
-    done();
   });
 
   describe("GET /:id", () => {
