@@ -20,7 +20,6 @@ jobs:
     services:
       db:
         image: postgres:13
-        container_name: integration-tests-prisma
         ports:
           - 5433:5432
         env:
