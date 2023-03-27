@@ -1,9 +1,9 @@
 import request from "supertest";
-import server, { app } from "@root/src";
-import { RESPONSE_CODE } from "@utils/types/response.types";
+import server, { app } from "../../../../src/index";
+import { RESPONSE_CODE } from "../../../../src/utils/types/response.types";
 import taskFixture from "../../../helper/fixtures/tasks/taskFixture.json";
-import main from "@root/test/helper/setup/setup-db";
-import prismaClient from "@configs/db.config";
+import main from "../../../helper/setup/setup-db";
+import prismaClient from "../../../../src/configs/db.config";
 
 describe("Tasks routes", () => {
   beforeAll((done) => {
