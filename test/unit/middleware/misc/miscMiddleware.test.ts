@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-for-in-array */
+import prismaClient from "@configs/db.config";
+import { prismaMock } from "@root/test/helper/singleton";
 import httpMocks from "node-mocks-http";
 import sinon from "sinon";
 
@@ -17,6 +19,11 @@ describe("Misc Middlewares", () => {
     afterEach(() => {
       process.env = env;
       nextFn.reset();
+    });
+
+    afterAll(async () => {
+      await prismaMock.$disconnect();
+      await prismaClient.$disconnect();
     });
 
     it("should move with next fn if env is not production", async () => {

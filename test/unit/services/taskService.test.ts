@@ -3,8 +3,13 @@ import taskFixture from "../../helper/fixtures/tasks/taskFixture.json";
 import { getTask } from "@root/src/services/tasks.services";
 import { type Task } from "@prisma/client";
 import { correctDateValues } from "@utils/helper/misc.helper";
+import prismaClient from "@configs/db.config";
 
 describe("Task Service", () => {
+  afterAll(async () => {
+    await prismaMock.$disconnect();
+    await prismaClient.$disconnect();
+  });
   describe("getTask", () => {
     const id: string = "test-id";
 
