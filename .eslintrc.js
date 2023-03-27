@@ -26,6 +26,7 @@ module.exports = {
         checksVoidReturn: false,
       },
     ],
+    "@typescript-eslint/member-delimiter-style": "off",
     "unused-imports/no-unused-vars": [
       "warn",
       {

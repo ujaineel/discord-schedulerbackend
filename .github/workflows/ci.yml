@@ -2,8 +2,7 @@
 name: CI
 env:
   NODE_ENV: ci
-  DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
-  APP_DATABASE_URL: ${{ secrets.APP_DATABASE_URL }}
+
 on:
   push:
     branches:
@@ -23,6 +22,7 @@ concurrency:
 jobs:
   ci:
     runs-on: ubuntu-latest
+    environment: ci
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -31,4 +31,6 @@ jobs:
           cache: "npm"
       - run: npm ci
       - run: NODE_ENV=$NODE_ENV npm run build --if-present
+        env:
+          DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
       - run: npm run test:unit

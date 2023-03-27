@@ -1,5 +1,4 @@
-import fs from "fs";
-import { faker } from "@faker-js/faker";
+const { faker } = require("@faker-js/faker");
 
 // Storing one as default fixture, but creating this function just in case if needed.
 export const createTaskFixture = () => {
@@ -18,6 +17,8 @@ export const createTaskFixture = () => {
   };
 };
 
+/*
+Commenting in case needed
 if (!fs.existsSync("test/helper/fixtures/tasks/taskFixture.json")) {
   const taskFixture = createTaskFixture();
   fs.writeFileSync(
@@ -25,3 +26,4 @@ if (!fs.existsSync("test/helper/fixtures/tasks/taskFixture.json")) {
     JSON.stringify(taskFixture)
   );
 }
+*/
