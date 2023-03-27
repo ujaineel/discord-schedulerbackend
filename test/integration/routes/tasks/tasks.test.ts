@@ -11,7 +11,6 @@ describe("Tasks routes", () => {
   });
 
   beforeEach(async () => {
-    await prismaClient.task.deleteMany();
     await main();
   });
 

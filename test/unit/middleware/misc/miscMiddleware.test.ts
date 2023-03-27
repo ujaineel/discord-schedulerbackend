@@ -22,9 +22,9 @@ describe("Misc Middlewares", () => {
     it("should move with next fn if env is not production", async () => {
       process.env.NODE_ENV = "development";
 
-      const { env } = await import("@configs/app.config");
+      await import("@configs/app.config");
       const { showApiDocs } = await import("@middlewares/misc/misc.middleware");
-      console.log(env);
+
       showApiDocs(req, res, nextFn);
       expect(nextFn.called).toBeTruthy();
     });
@@ -32,9 +32,9 @@ describe("Misc Middlewares", () => {
     it("should return NOT_FOUND if env is production", async () => {
       process.env.NODE_ENV = "production";
 
-      const { env } = await import("@configs/app.config");
+      await import("@configs/app.config");
       const { showApiDocs } = await import("@middlewares/misc/misc.middleware");
-      console.log(env);
+
       showApiDocs(req, res, nextFn);
       expect(nextFn.called).toBeFalsy();
     });

@@ -2,6 +2,8 @@ import prismaClient from "../../../src/configs/db.config";
 import { createTaskFixture } from "../fixtures/tasks/task.fixture.mjs";
 
 const main = async (): Promise<void> => {
+  await prismaClient.task.deleteMany();
+
   const task1 = await prismaClient.task.create({
     data: {
       id: "3142fa93-b2c2-4562-a35b-579d683524d4",
