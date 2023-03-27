@@ -11,6 +11,9 @@ describe("meta routes", () => {
   afterAll(async () => {
     // Closing the DB connection allows Jest to exit successfully.
     await prismaClient.$disconnect();
+  });
+
+  afterEach(() => {
     server.close();
   });
 

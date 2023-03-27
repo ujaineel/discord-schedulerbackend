@@ -16,6 +16,9 @@ describe("Tasks routes", () => {
 
   afterAll(async () => {
     await prismaClient.$disconnect();
+  });
+
+  afterEach(() => {
     server.close();
   });
 
