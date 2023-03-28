@@ -1,18 +1,9 @@
 module.exports = {
-  preset: "ts-jest",
   testEnvironment: "node",
   setupFiles: ["./test/helper/setup/setup-tests.ts"],
   clearMocks: true,
   moduleFileExtensions: ["ts", "js", "node"],
   roots: ["<rootDir>/src", "<rootDir>/test"],
-  transform: {
-    "^.+\\.ts?$": [
-      "ts-jest",
-      {
-        diagnostics: false,
-      },
-    ],
-  },
   setupFilesAfterEnv: ["jest-extended"],
   moduleNameMapper: {
     "^@routes/(.*)": "<rootDir>/src/routes/$1",
