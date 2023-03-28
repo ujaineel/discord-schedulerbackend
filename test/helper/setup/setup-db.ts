@@ -1,5 +1,5 @@
 import prismaClient from "../../../src/configs/db.config";
-import { createTaskFixture } from "../fixtures/tasks/task.fixture.mjs";
+import { createTaskFixture } from "../fixtures/tasks/task.fixture.js";
 import taskFixture from "../fixtures/tasks/taskFixture.json";
 
 const main = async (): Promise<void> => {
