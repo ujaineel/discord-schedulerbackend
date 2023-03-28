@@ -1,6 +1,8 @@
 import { isDate } from "lodash";
 
-export const correctDateValues = (object: Record<string, unknown>): any => {
+export const correctDateValues = (
+  object: Record<string, unknown>
+): Record<any, unknown> => {
   const objectCopy = { ...object };
 
   let property;

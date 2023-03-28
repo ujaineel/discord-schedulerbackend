@@ -1,9 +1,10 @@
 import { type Task } from "@prisma/client";
 import { isvalidUUID } from "@utils/helper/misc.helper";
+import { isCreateTaskDto } from "@utils/helper/task.helper";
 import { RESPONSE_CODE } from "@utils/types/response.types";
 import { type Request, type Response } from "express";
 import { isEmpty } from "lodash";
-import { getTask } from "../services/tasks.services";
+import { getTask, postTask } from "../services/tasks.services";
 
 const getTaskController = async (
   req: Request,
@@ -49,4 +50,41 @@ const getTaskController = async (
   }
 };
 
-export { getTaskController };
+const postTaskController = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  /**
+   * #swagger.tags = ['Tasks']
+   * #swagger.summary = "Create Single Task"
+   * #swagger.operationId = "postTask"
+   */
+
+  const createTaskDto = req.body;
+  if (!isCreateTaskDto(createTaskDto)) {
+    // #swagger.responses[400] = { description: 'Bad Request. Please check if id is provided' }
+    res
+      .status(RESPONSE_CODE.BAD_REQUEST)
+      .json({ message: "Invalid request. Provide proper id" });
+    return;
+  }
+
+  try {
+    const task: Task | null = await postTask(req.body);
+
+    if (isEmpty(task)) {
+      throw new Error("INTERNAL SERVER ERROR: Task could not be created");
+    }
+
+    // #swagger.responses[201] = { description: 'Task Created', schema: { $ref: '#/components/schemas/Task' }}
+    res.status(RESPONSE_CODE.CREATED).json({ data: task });
+    return;
+  } catch (error) {
+    // #swagger.responses[500] = { description: 'Internal Server Error' }
+    res
+      .status(RESPONSE_CODE.INTERNAL_SERVER_ERROR)
+      .json({ message: "ERROR: Error occurred while finding task" });
+  }
+};
+
+export default { getTaskController, postTaskController };
