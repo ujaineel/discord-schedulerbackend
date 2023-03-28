@@ -1,5 +1,4 @@
 import { type Task } from "@prisma/client";
-import { type CreateTaskDto } from "@utils/dtos/tasks.dtos";
 import { isvalidUUID } from "@utils/helper/misc.helper";
 import { isCreateTaskDto } from "@utils/helper/task.helper";
 import { RESPONSE_CODE } from "@utils/types/response.types";
@@ -90,17 +89,17 @@ const postTaskController = async (
    * }
    */
 
+  const createTaskDto = req.body;
   if (!isCreateTaskDto(req.body)) {
     // #swagger.responses[400] = { description: 'Bad Request. Please check if data provided is proper' }
-    res
-      .status(RESPONSE_CODE.BAD_REQUEST)
-      .json({
-        message: "Bad request. Please check if data provided is proper",
-      });
+    res.status(RESPONSE_CODE.BAD_REQUEST).json({
+      message: "Bad request. Please check if data provided is proper",
+    });
+
+    console.log(JSON.stringify(createTaskDto));
     return;
   }
 
-  const createTaskDto: CreateTaskDto = req.body;
   try {
     const task: Task | null = await postTask(createTaskDto);
 

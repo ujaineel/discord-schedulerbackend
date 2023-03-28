@@ -61,7 +61,7 @@ const doc = {
           type: "string",
         },
       },
-      required: ["createdAt", "updatedAt", "title", "userId"],
+      required: ["title", "userId"],
     },
   },
 };

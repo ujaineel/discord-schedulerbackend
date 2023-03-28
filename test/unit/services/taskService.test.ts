@@ -13,10 +13,10 @@ describe("Task Service", () => {
   describe("getTask", () => {
     const id: string = "test-id";
 
-    const testTask: Task = correctDateValues({
+    const testTask = correctDateValues({
       ...taskFixture,
       deletedAt: null,
-    });
+    }) as unknown as Task;
 
     it("should return task if found", async () => {
       prismaMock.task.findFirst.mockResolvedValue(testTask);
