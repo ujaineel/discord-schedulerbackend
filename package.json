@@ -13,6 +13,7 @@
     "lint": "eslint --ext .ts src",
     "lint:fix": "eslint --ext .ts src --fix",
     "prepare": "is-ci || husky install",
+    "prisma:generate": "dotenv -e ./env/.env.$NODE_ENV -- npx prisma generate",
     "migrate:prisma:push": "dotenv -e ./env/.env.$NODE_ENV -- npx prisma db push --preview-feature",
     "migrate:prisma": "dotenv -e ./env/.env.$NODE_ENV -- npx prisma migrate dev --preview-feature",
     "migrate:diff": "dotenv -e ./env/.env.$NODE_ENV -- npx prisma migrate diff --from-empty --to-schema-datamodel ./prisma/schema.prisma --script > ./prisma/migrations/000000000000_squashed_migrations/migration.sql",

@@ -13,6 +13,7 @@ export const createTaskFixture = () => {
     createdAt: createdAtDate,
     updatedAt: updatedAtDate,
     deletedAt: faker.date.soon(3, updatedAtDate),
+    dueDate: faker.date.soon(2, updatedAtDate),
     userId: faker.datatype.uuid(),
   };
 };
