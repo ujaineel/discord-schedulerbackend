@@ -1,5 +1,5 @@
 import prismaClient from "../../../src/configs/db.config";
-import { createTaskFixture } from "../fixtures/tasks/task.fixture.mjs";
+import { createTaskFixture } from "../fixtures/tasks/task.fixture.js";
 
 const main = async (): Promise<void> => {
   await prismaClient.task.deleteMany();
