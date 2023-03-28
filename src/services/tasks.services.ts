@@ -10,13 +10,11 @@ const getTask = async (id: string): Promise<Task | null> => {
     });
 
     if (isEmpty(task)) {
-      // #swagger.responses[204] = { description: 'No Task Found.' }
       return null;
     }
 
     return task;
   } catch (error: any) {
-    // #swagger.responses[500] = { description: 'Internal Server Error' }
     console.log(JSON.stringify(error), error?.message, error?.stack);
     throw new Error(error);
   }

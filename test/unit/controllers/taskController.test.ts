@@ -4,6 +4,13 @@ import httpMocks from "node-mocks-http";
 import { RESPONSE_CODE } from "@utils/types/response.types";
 import createTaskDtoFixture from "../../helper/fixtures/tasks/createTaskDtoFixture.json";
 
+const mockPostTalk = jest.fn();
+jest.mock("../../../src/services/tasks.services.ts", () => {
+  return jest.fn().mockImplementation(() => {
+    return { postTask: mockPostTalk };
+  });
+});
+
 describe("Tasks Controllers - Unit", () => {
   describe("getTaskController", () => {
     beforeEach(() => {
@@ -38,6 +45,17 @@ describe("Tasks Controllers - Unit", () => {
     it("should return with 500 response code if error occurs", async () => {
       prismaMock.task.create.mockRejectedValue(null);
 
+      const req = httpMocks.createRequest({
+        body: createTaskDtoFixture,
+      });
+      const res = httpMocks.createResponse();
+
+      await taskController.postTaskController(req, res);
+
+      expect(res.statusCode).toBe(RESPONSE_CODE.INTERNAL_SERVER_ERROR);
+    });
+
+    it("should return with 500 response code if no task provided", async () => {
       const req = httpMocks.createRequest({
         body: createTaskDtoFixture,
       });

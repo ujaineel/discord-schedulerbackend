@@ -29,45 +29,39 @@ const doc = {
       description: "Operations related to Tasks",
     },
   ],
-  components: {
-    "@schemas": {
-      Task: {
-        type: "object",
-        properties: {
-          id: {
-            type: "string",
-          },
-          title: {
-            type: "string",
-          },
-          content: {
-            type: "string",
-          },
-          createdAt: {
-            type: "datetime",
-          },
-          updatedAt: {
-            type: "datetime",
-          },
-          deletedAt: {
-            type: "datetime",
-          },
-          published: {
-            type: "boolean",
-          },
-          userId: {
-            type: "string",
-          },
+  definition: {
+    Task: {
+      type: "object",
+      properties: {
+        id: {
+          type: "string",
         },
-        required: [
-          "id",
-          "createdAt",
-          "updatedAt",
-          "title",
-          "published",
-          "userId",
-        ],
+        title: {
+          type: "string",
+        },
+        content: {
+          type: "string",
+        },
+        createdAt: {
+          type: "datetime",
+        },
+        updatedAt: {
+          type: "datetime",
+        },
+        deletedAt: {
+          type: "datetime",
+        },
+        dueDate: {
+          type: "datetime",
+        },
+        published: {
+          type: "boolean",
+        },
+        userId: {
+          type: "string",
+        },
       },
+      required: ["createdAt", "updatedAt", "title", "userId"],
     },
   },
 };

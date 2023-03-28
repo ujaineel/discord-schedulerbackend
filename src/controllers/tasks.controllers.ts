@@ -1,4 +1,5 @@
 import { type Task } from "@prisma/client";
+import { type CreateTaskDto } from "@utils/dtos/tasks.dtos";
 import { isvalidUUID } from "@utils/helper/misc.helper";
 import { isCreateTaskDto } from "@utils/helper/task.helper";
 import { RESPONSE_CODE } from "@utils/types/response.types";
@@ -58,19 +59,50 @@ const postTaskController = async (
    * #swagger.tags = ['Tasks']
    * #swagger.summary = "Create Single Task"
    * #swagger.operationId = "postTask"
+   * #swagger.requestBody = {
+   *  required: true,
+   *  "@content": {
+   *    "application/json": {
+   *      schema: {
+   *        type: "object"
+   *        properties: {
+   *          title: {
+   *            type: "string"
+   *          },
+   *          content: {
+   *            type: "string"
+   *          },
+   *          published: {
+   *            type: "boolean"
+   *          },
+   *          dueDate: {
+   *            type: "string",
+   *            format: "date-time"
+   *          },
+   *          userId: {
+   *            type: "string"
+   *          }
+   *        },
+   *        required: ["title", "userId"]
+   *      }
+   *    }
+   *  }
+   * }
    */
 
-  const createTaskDto = req.body;
-  if (!isCreateTaskDto(createTaskDto)) {
-    // #swagger.responses[400] = { description: 'Bad Request. Please check if id is provided' }
+  if (!isCreateTaskDto(req.body)) {
+    // #swagger.responses[400] = { description: 'Bad Request. Please check if data provided is proper' }
     res
       .status(RESPONSE_CODE.BAD_REQUEST)
-      .json({ message: "Invalid request. Provide proper id" });
+      .json({
+        message: "Bad request. Please check if data provided is proper",
+      });
     return;
   }
 
+  const createTaskDto: CreateTaskDto = req.body;
   try {
-    const task: Task | null = await postTask(req.body);
+    const task: Task | null = await postTask(createTaskDto);
 
     if (isEmpty(task)) {
       throw new Error("INTERNAL SERVER ERROR: Task could not be created");

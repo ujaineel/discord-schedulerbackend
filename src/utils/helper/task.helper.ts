@@ -7,9 +7,9 @@ const isCreateTaskDto = (body: Record<any, any>): boolean => {
 
   return (
     typeof body?.title === "string" &&
-    (typeof body.content === "string" ?? true) &&
-    (typeof body.published === "boolean" ?? true) &&
-    typeof body.userId === "string"
+    (typeof body?.content === "string" ?? true) &&
+    (typeof body?.published === "boolean" ?? true) &&
+    typeof body?.userId === "string"
   );
 };
 
