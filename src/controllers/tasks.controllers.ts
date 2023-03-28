@@ -101,11 +101,7 @@ const postTaskController = async (
   }
 
   try {
-    const task: Task | null = await postTask(createTaskDto);
-
-    if (isEmpty(task)) {
-      throw new Error("INTERNAL SERVER ERROR: Task could not be created");
-    }
+    const task: Task = await postTask(createTaskDto);
 
     // #swagger.responses[201] = { description: 'Task Created', schema: { $ref: '#/components/schemas/Task' }}
     res.status(RESPONSE_CODE.CREATED).json({ data: task });

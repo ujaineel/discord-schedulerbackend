@@ -20,13 +20,9 @@ const getTask = async (id: string): Promise<Task | null> => {
   }
 };
 
-const postTask = async (createTaskDto: CreateTaskDto): Promise<Task | null> => {
+const postTask = async (createTaskDto: CreateTaskDto): Promise<Task> => {
   try {
     const task: Task = await prismaClient.task.create({ data: createTaskDto });
-
-    if (isEmpty(task)) {
-      return null;
-    }
 
     return task;
   } catch (error: any) {
