@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   base_branch_cov:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     environment: ci
     steps:
       - uses: actions/checkout@v3
@@ -25,12 +25,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
-      - name: Run Build
-        run: npm run build
-        env:
-          DOTENV_KEY: ${{ secrets.DOTENV_KEY }}'
-          APP_DATABASE_URL: ${{ secrets.APP_DATABASE_URL }}
 
       - name: Run test coverage
         run: npm run test:cov
@@ -45,7 +39,7 @@ jobs:
           path: ./coverage/lcov.info
 
   checks:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     environment: ci
     needs: base_branch_cov
     steps:
@@ -62,12 +56,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
-      - name: Run Build
-        run: npm run build
-        env:
-          DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
-          APP_DATABASE_URL: ${{ secrets.APP_DATABASE_URL }}
 
       - name: Run test coverage
         run: npm run test:cov
