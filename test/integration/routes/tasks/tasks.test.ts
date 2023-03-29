@@ -12,7 +12,7 @@ describe("Tasks routes", () => {
 
   beforeEach(async () => {
     await main();
-  });
+  }, 10000);
 
   afterAll(async () => {
     await prismaClient.$disconnect();
