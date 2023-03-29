@@ -2,7 +2,7 @@ module.exports = {
   testEnvironment: "node",
   setupFiles: ["./test/helper/setup/setup-tests.ts"],
   clearMocks: true,
-  moduleFileExtensions: ["ts", "js", "node"],
+  moduleFileExtensions: ["ts", "js", "mjs", "node"],
   roots: ["<rootDir>/src", "<rootDir>/test"],
   setupFilesAfterEnv: ["jest-extended"],
   moduleNameMapper: {

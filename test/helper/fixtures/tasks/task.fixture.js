@@ -1,7 +1,7 @@
 const { faker } = require("@faker-js/faker");
 
 // Storing one as default fixture, but creating this function just in case if needed.
-export const createTaskFixture = () => {
+const createTaskFixture = () => {
   const createdAtDate = faker.date.recent(20, "2023-02-01T00:00:00.000Z");
   const updatedAtDate = faker.date.soon(2, createdAtDate);
 
@@ -13,10 +13,12 @@ export const createTaskFixture = () => {
     createdAt: createdAtDate,
     updatedAt: updatedAtDate,
     deletedAt: faker.date.soon(3, updatedAtDate),
+    dueDate: faker.date.soon(2, updatedAtDate),
     userId: faker.datatype.uuid(),
   };
 };
 
+module.exports = { createTaskFixture };
 /*
 Commenting in case needed
 if (!fs.existsSync("test/helper/fixtures/tasks/taskFixture.json")) {

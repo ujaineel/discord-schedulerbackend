@@ -4,16 +4,8 @@ import server, { app } from "../../../../src/index";
 import { RESPONSE_CODE } from "../../../../src/utils/types/response.types";
 
 describe("meta routes", () => {
-  beforeAll((done) => {
-    done();
-  });
-
-  afterAll(async () => {
-    // Closing the DB connection allows Jest to exit successfully.
+  afterEach(async () => {
     await prismaClient.$disconnect();
-  });
-
-  afterEach(() => {
     server.close();
   });
 

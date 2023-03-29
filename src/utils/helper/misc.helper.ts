@@ -1,12 +1,12 @@
-import { isDate } from "lodash";
-
-export const correctDateValues = (object: Record<string, unknown>): any => {
+export const correctDateValues = (
+  object: Record<string, unknown>
+): Record<any, unknown> => {
   const objectCopy = { ...object };
 
   let property;
   for (property in object) {
     const value = object[property];
-    if (typeof value === "string" && isDate(object[property])) {
+    if (typeof value === "string" && !isNaN(Date.parse(value))) {
       objectCopy[property] = new Date(value);
     }
   }
