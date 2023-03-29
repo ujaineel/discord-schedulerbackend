@@ -10,7 +10,8 @@ import { type Task } from "@prisma/client";
 describe("Tasks routes", () => {
   beforeEach(async () => {
     await main();
-  }, 7500);
+    server.listen();
+  }, 10000);
 
   afterEach(async () => {
     await prismaClient.$disconnect();
