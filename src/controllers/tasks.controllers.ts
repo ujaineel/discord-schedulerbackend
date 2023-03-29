@@ -34,8 +34,8 @@ const getTaskController = async (
     const task: Task | null = await getTask(id);
 
     if (isEmpty(task)) {
-      // #swagger.responses[204] = { description: 'No Task Found.' }
-      res.status(RESPONSE_CODE.NO_CONTENT).json(null);
+      // #swagger.responses[200] = { description: 'No Task Found.' }
+      res.status(RESPONSE_CODE.OK).json({ data: [] });
       return;
     }
 

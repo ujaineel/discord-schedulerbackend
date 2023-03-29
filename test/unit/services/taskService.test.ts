@@ -1,9 +1,10 @@
 import { prismaMock } from "../../helper/singleton";
 import taskFixture from "../../helper/fixtures/tasks/taskFixture.json";
-import { getTask } from "@root/src/services/tasks.services";
+import { getTask, postTask } from "@root/src/services/tasks.services";
 import { type Task } from "@prisma/client";
 import { correctDateValues } from "@utils/helper/misc.helper";
 import prismaClient from "@configs/db.config";
+import { type CreateTaskDto } from "@utils/dtos/tasks.dtos";
 
 describe("Task Service", () => {
   afterAll(async () => {
@@ -45,6 +46,23 @@ describe("Task Service", () => {
 
       expect(error).toBeDefined();
       expect(task).toBeUndefined();
+    });
+  });
+
+  describe("postTask", () => {
+    const createTaskDto: CreateTaskDto = {
+      title: "Test Title #1",
+      userId: "sfdsf",
+    };
+
+    it.failing("throw an error if an issue occurs", async () => {
+      prismaMock.task.create.mockRejectedValue(
+        new Error("Something went wrong")
+      );
+
+      const task = await postTask(createTaskDto);
+
+      return task;
     });
   });
 });

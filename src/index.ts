@@ -1,14 +1,11 @@
-import express, { type Response } from "express";
+import express from "express";
 
 import morgan from "morgan";
 import cors from "cors";
-import swaggerUI from "swagger-ui-express";
-import swaggerOutput from "@root/swaggerOutput.json";
 
 import { appPort } from "@configs/app.config";
 import routes from "@routes/index";
 
-import { showApiDocs } from "@middlewares/misc/misc.middleware";
 import { type Server } from "http";
 
 // Falls back to dotenv.config if issues, so sending path as well.
@@ -21,16 +18,6 @@ app.use(morgan("dev"));
 app.use(cors());
 
 app.use(routes);
-app.get("/ping", (_, res: Response) => {
-  res.send("pong");
-});
-
-app.use(
-  "/api-docs",
-  showApiDocs,
-  swaggerUI.serve,
-  swaggerUI.setup(swaggerOutput)
-);
 
 const start = (): Server => {
   try {
@@ -40,7 +27,9 @@ const start = (): Server => {
 
     return server;
   } catch (error) {
+    /* istanbul ignore next */
     console.error(error);
+    /* istanbul ignore next */
     process.exit(1);
   }
 };

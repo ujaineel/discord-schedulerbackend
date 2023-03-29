@@ -1,4 +1,4 @@
-import { isBoolean, isDate, isEmpty } from "lodash";
+import { isBoolean, isEmpty } from "lodash";
 import { isvalidUUID } from "./misc.helper";
 
 const isCreateTaskDto = (body: Record<any, any>): boolean => {
@@ -8,11 +8,13 @@ const isCreateTaskDto = (body: Record<any, any>): boolean => {
   }
 
   return (
-    (!isEmpty(body?.title) ?? false) &&
+    ("title" in body ? !isEmpty(body?.title) : false) &&
     ("content" in body ? !isEmpty(body.content) : true) &&
     ("published" in body ? isBoolean(body.published) : true) &&
-    ("dueDate" in body ? isDate(body.dueDate) : true) &&
-    (isvalidUUID(body?.userId) ?? false)
+    ("dueDate" in body && typeof body.dueDate === "string"
+      ? !isNaN(Date.parse(body?.dueDate))
+      : true) &&
+    ("userId" in body ? isvalidUUID(body?.userId) : false)
   );
 };
 

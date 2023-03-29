@@ -8,4 +8,4 @@ export const routerConfig: RouterOptions = {
 
 export const appPort: number =
   typeof process.env.PORT === "string" ? parseInt(process.env?.PORT) : 8081;
-export const env: string = process.env?.NODE_ENV ?? ENV.DEVELOPMENT;
+export const env: string = process.env?.NODE_ENV ?? ENV.LOCAL;
