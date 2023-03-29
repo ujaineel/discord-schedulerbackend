@@ -1,6 +1,6 @@
 import prismaClient from "@configs/db.config";
 import { type Task } from "@prisma/client";
-import { type CreateTaskDto } from "@utils/dtos/tasks.dtos";
+import { type CreateTaskDto, type PatchTaskDto } from "@utils/dtos/tasks.dtos";
 import { isEmpty } from "lodash";
 
 const getTask = async (id: string): Promise<Task | null> => {
@@ -31,4 +31,24 @@ const postTask = async (createTaskDto: CreateTaskDto): Promise<Task> => {
   }
 };
 
-export { getTask, postTask };
+const patchTask = async ({
+  id,
+  patchTaskDto,
+}: {
+  id: string;
+  patchTaskDto: PatchTaskDto;
+}): Promise<Task> => {
+  try {
+    const task = await prismaClient.task.update({
+      where: { id },
+      data: { ...patchTaskDto },
+    });
+
+    return task;
+  } catch (error: any) {
+    console.log(JSON.stringify(error), error?.message, error?.stack);
+    throw new Error(error);
+  }
+};
+
+export { getTask, postTask, patchTask };
