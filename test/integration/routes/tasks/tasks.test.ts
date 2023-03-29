@@ -8,19 +8,12 @@ import prismaClient from "../../../../src/configs/db.config";
 import { type Task } from "@prisma/client";
 
 describe("Tasks routes", () => {
-  beforeAll((done) => {
-    done();
-  });
-
   beforeEach(async () => {
     await main();
-  });
+  }, 7500);
 
-  afterAll(async () => {
+  afterEach(async () => {
     await prismaClient.$disconnect();
-  });
-
-  afterEach(() => {
     server.close();
   });
 
