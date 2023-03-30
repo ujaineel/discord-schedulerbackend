@@ -64,7 +64,7 @@ describe("Tasks routes", () => {
       const parsedText = JSON.parse(text)?.data;
 
       expect(statusCode).toEqual(RESPONSE_CODE.OK);
-      expect(parsedText).toEqual([]);
+      expect(parsedText).toEqual(null);
     });
   });
 
@@ -160,6 +160,34 @@ describe("Tasks routes", () => {
 
       expect(statusCode).toBe(RESPONSE_CODE.INTERNAL_SERVER_ERROR);
       expect(text).toBeDefined();
+    });
+  });
+
+  describe("deleteTaskController", () => {
+    let createdId: string;
+    beforeEach(async () => {
+      const task = await prismaClient.task.create({
+        data: { ...createTaskDtoFixture },
+      });
+      createdId = task.id;
+    });
+
+    it("should delete a task and return a deleted flag based on successful deletion operation", async () => {
+      const { statusCode, text }: { statusCode: number; text: any } =
+        await request(app).delete(`/tasks/${createdId}`);
+      const parsedText = JSON.parse(text)?.deleted;
+
+      expect(statusCode).toBe(RESPONSE_CODE.OK);
+      expect(parsedText).toEqual(true);
+
+      const { statusCode: responseCode, text: fetchTask } = await request(
+        app
+      ).get(`/tasks/${createdId}`);
+      expect(responseCode).toBe(RESPONSE_CODE.OK);
+
+      const fetchedTask: Task | null = JSON.parse(fetchTask)?.data;
+
+      expect(fetchedTask).toEqual(null);
     });
   });
 });

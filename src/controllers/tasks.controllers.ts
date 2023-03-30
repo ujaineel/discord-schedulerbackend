@@ -40,7 +40,7 @@ const getTaskController = async (
 
     if (isEmpty(task)) {
       // #swagger.responses[200] = { description: 'No Task Found.' }
-      res.status(RESPONSE_CODE.OK).json({ data: [] });
+      res.status(RESPONSE_CODE.OK).json({ data: null });
       return;
     }
 
@@ -198,6 +198,17 @@ const deleteTaskController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  /**
+   * #swagger.tags = ['Tasks']
+   * #swagger.summary = "Delete Single Task Using ID"
+   * #swagger.operationId = "deleteTask"
+   * #swagger.parameters['id'] = {
+   *  in: 'path',
+   *  description: 'Task ID/UUID',
+   *  required: true,
+   * }
+   */
+
   const id = req.params?.id;
   if (!isvalidUUID(id)) {
     // #swagger.responses[400] = { description: 'Bad Request. Please check if data provided is proper' }
@@ -219,12 +230,10 @@ const deleteTaskController = async (
     return;
   } catch (error: any) {
     // #swagger.responses[] = { description: 'Internal Server Error' }
-    res
-      .status(RESPONSE_CODE.INTERNAL_SERVER_ERROR)
-      .json({
-        message: "ERROR: Error occurred while deleting task",
-        deleted: false,
-      });
+    res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).json({
+      message: "ERROR: Error occurred while deleting task",
+      deleted: false,
+    });
   }
 };
 

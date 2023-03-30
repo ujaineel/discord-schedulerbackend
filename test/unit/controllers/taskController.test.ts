@@ -108,4 +108,46 @@ describe("Tasks Controllers - Unit", () => {
       expect(mockIsValidUUID).toBeCalled();
     });
   });
+
+  describe("deleteTaskController", () => {
+    beforeEach(() => {
+      prismaMock.task.delete.mockImplementation();
+    });
+
+    afterAll(async () => {
+      await prismaMock.$disconnect();
+    });
+
+    it("should return BAD REQUEST response code if not valid UUID", async () => {
+      const mockIsValidUUID = jest.spyOn(miscHelpers, "isvalidUUID");
+
+      const req: Request = httpMocks.createRequest({
+        params: { id: "test-deal" },
+      });
+
+      const res: Response = httpMocks.createResponse();
+
+      await taskController.deleteTaskController(req, res);
+
+      expect(res.statusCode).toBe(RESPONSE_CODE.BAD_REQUEST);
+      expect(mockIsValidUUID).toBeCalledWith("test-deal");
+    });
+
+    it("should return INTERNAL SERVER ERROR response code if an error occurs", async () => {
+      const mockIsValidUUID = jest.spyOn(miscHelpers, "isvalidUUID");
+
+      prismaMock.task.delete.mockRejectedValue(new Error());
+
+      const req: Request = httpMocks.createRequest({
+        params: { id: "3142fa93-b2c2-4562-a35b-579d683524d4" },
+      });
+
+      const res: Response = httpMocks.createResponse();
+
+      await taskController.deleteTaskController(req, res);
+
+      expect(res.statusCode).toBe(RESPONSE_CODE.INTERNAL_SERVER_ERROR);
+      expect(mockIsValidUUID).toBeCalled();
+    });
+  });
 });
