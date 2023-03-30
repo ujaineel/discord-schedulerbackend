@@ -1,6 +1,7 @@
 import { prismaMock } from "../../helper/singleton";
 import taskFixture from "../../helper/fixtures/tasks/taskFixture.json";
 import {
+  deleteTask,
   getTask,
   patchTask,
   postTask,
@@ -84,6 +85,20 @@ describe("Task Service", () => {
       );
 
       const task = await patchTask({ id, patchTaskDto });
+
+      return task;
+    });
+  });
+
+  describe("deleteTask", () => {
+    const deleteTaskId = "";
+
+    it.failing("throw an error if an issue occurs", async () => {
+      prismaMock.task.delete.mockRejectedValue(
+        new Error("Something went wrong while delete task")
+      );
+
+      const task = await deleteTask(deleteTaskId);
 
       return task;
     });
