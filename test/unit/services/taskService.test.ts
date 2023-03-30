@@ -1,10 +1,14 @@
 import { prismaMock } from "../../helper/singleton";
 import taskFixture from "../../helper/fixtures/tasks/taskFixture.json";
-import { getTask, postTask } from "@root/src/services/tasks.services";
+import {
+  getTask,
+  patchTask,
+  postTask,
+} from "@root/src/services/tasks.services";
 import { type Task } from "@prisma/client";
 import { correctDateValues } from "@utils/helper/misc.helper";
 import prismaClient from "@configs/db.config";
-import { type CreateTaskDto } from "@utils/dtos/tasks.dtos";
+import { type PatchTaskDto, type CreateTaskDto } from "@utils/dtos/tasks.dtos";
 
 describe("Task Service", () => {
   afterAll(async () => {
@@ -61,6 +65,25 @@ describe("Task Service", () => {
       );
 
       const task = await postTask(createTaskDto);
+
+      return task;
+    });
+  });
+
+  describe("patchTask", () => {
+    const patchTaskDto: PatchTaskDto = {
+      title: "Update Test Title #1",
+      published: true,
+    };
+
+    const id: string = "test-id";
+
+    it.failing("throw an error if an issue occurs", async () => {
+      prismaMock.task.update.mockRejectedValue(
+        new Error("Something went wrong while patching task")
+      );
+
+      const task = await patchTask({ id, patchTaskDto });
 
       return task;
     });
