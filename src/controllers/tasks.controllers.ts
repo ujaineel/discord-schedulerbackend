@@ -118,6 +118,41 @@ const patchTaskController = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  /**
+   * #swagger.tags = ['Tasks']
+   * #swagger.summary = "Patch/Update Single Task"
+   * #swagger.operationId = "patchTask"
+   * #swagger.requestBody = {
+   *  required: true,
+   *  "@content": {
+   *    "application/json": {
+   *      schema: {
+   *        type: "object"
+   *        properties: {
+   *          title: {
+   *            type: "string"
+   *          },
+   *          content: {
+   *            type: "string"
+   *          },
+   *          published: {
+   *            type: "boolean"
+   *          },
+   *          dueDate: {
+   *            type: "string",
+   *            format: "date-time"
+   *          },
+   *          userId: {
+   *            type: "string"
+   *          }
+   *        },
+   *        required: []
+   *      }
+   *    }
+   *  }
+   * }
+   */
+
   const patchTaskDto = req.body;
   if (!isPatchTaskDto(req.body)) {
     // #swagger.responses[400] = { description: 'Bad Request. Please check if data provided is proper' }
@@ -130,7 +165,6 @@ const patchTaskController = async (
   }
 
   try {
-    // TODO: Swagger Stuff
     // TODO: Tests
     const task: Task = await patchTask(patchTaskDto);
 
