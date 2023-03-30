@@ -51,4 +51,15 @@ const patchTask = async ({
   }
 };
 
-export { getTask, postTask, patchTask };
+const deleteTask = async (id: string): Promise<Task> => {
+  try {
+    const task = await prismaClient.task.delete({ where: { id } });
+
+    return task;
+  } catch (error: any) {
+    console.log(JSON.stringify(error), error?.message, error?.stack);
+    throw new Error(error);
+  }
+};
+
+export { getTask, postTask, patchTask, deleteTask };
