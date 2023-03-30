@@ -36,7 +36,7 @@ describe("Task Helper Functions", () => {
           userId: "18af73a8-14bd-4d5e-973a-53ddc99ddaa1",
           field: "jijmkisf",
         })
-      ).toBe(true);
+      ).toBe(false);
     });
   });
 
@@ -57,7 +57,6 @@ describe("Task Helper Functions", () => {
       expect(
         isPatchTaskDto({
           title: "test title #1",
-          userId: "18af73a8-14bd-4d5e-973a-53ddc99ddaa1",
           dueDate: "2023-01-24T14:32:31.020Z",
         })
       ).toBe(true);
@@ -67,8 +66,25 @@ describe("Task Helper Functions", () => {
       expect(
         isPatchTaskDto({
           title: "test title #1",
-          userId: "18af73a8-14bd-4d5e-973a-53ddc99ddaa1",
-          field: "jijmkisf",
+          userId: "jijmkisf",
+        })
+      ).toBe(false);
+    });
+
+    it("should return false if each field is proper value", () => {
+      expect(
+        isPatchTaskDto({
+          content: "",
+          published: "",
+          dueDate: "",
+        })
+      ).toBe(false);
+    });
+
+    it("should return true if each field is proper value", () => {
+      expect(
+        isPatchTaskDto({
+          published: true,
         })
       ).toBe(true);
     });

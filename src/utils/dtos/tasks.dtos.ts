@@ -11,5 +11,4 @@ export interface PatchTaskDto {
   content?: string;
   published?: boolean;
   dueDate?: Date;
-  deletedAt?: Date;
 }

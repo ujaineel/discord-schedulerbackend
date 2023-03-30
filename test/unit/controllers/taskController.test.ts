@@ -3,6 +3,9 @@ import taskController from "@controllers/tasks.controllers";
 import httpMocks from "node-mocks-http";
 import { RESPONSE_CODE } from "@utils/types/response.types";
 import createTaskDtoFixture from "../../helper/fixtures/tasks/createTaskDtoFixture.json";
+import patchTaskDtoFixture from "../../helper/fixtures/tasks/patchTaskDtoFixture.json";
+import { type Request, type Response } from "express";
+import * as miscHelpers from "@utils/helper/misc.helper";
 
 const mockPostTalk = jest.fn();
 jest.mock("../../../src/services/tasks.services.ts", () => {
@@ -64,6 +67,45 @@ describe("Tasks Controllers - Unit", () => {
       await taskController.postTaskController(req, res);
 
       expect(res.statusCode).toBe(RESPONSE_CODE.INTERNAL_SERVER_ERROR);
+    });
+  });
+
+  describe("patchTaskController", () => {
+    beforeEach(() => {
+      prismaMock.task.create.mockImplementation();
+    });
+
+    afterAll(async () => {
+      await prismaMock.$disconnect();
+    });
+
+    it("should return with 500 response if error occurs", async () => {
+      const req: Request = httpMocks.createRequest({
+        body: patchTaskDtoFixture,
+        params: { id: "3142fa93-b2c2-4562-a35b-579d683524d4" },
+      });
+
+      const res: Response = httpMocks.createResponse();
+
+      await taskController.patchTaskController(req, res);
+
+      expect(res.statusCode).toBe(RESPONSE_CODE.INTERNAL_SERVER_ERROR);
+    });
+
+    it("should return with 400 response code if not valid UUID", async () => {
+      const mockIsValidUUID = jest.spyOn(miscHelpers, "isvalidUUID");
+
+      const req: Request = httpMocks.createRequest({
+        body: patchTaskDtoFixture,
+        params: { id: "test-deal" },
+      });
+
+      const res: Response = httpMocks.createResponse();
+
+      await taskController.patchTaskController(req, res);
+
+      expect(res.statusCode).toBe(RESPONSE_CODE.BAD_REQUEST);
+      expect(mockIsValidUUID).toBeCalled();
     });
   });
 });
