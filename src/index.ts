@@ -3,7 +3,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 
-import { appPort, cookieSecret } from "@configs/app.config";
+import { appPort, cookieToken } from "@configs/app.config";
 import routes from "@routes/index";
 
 import { type Server } from "http";
@@ -22,12 +22,12 @@ app.use(cors());
 
 app.use(
   session({
-    secret: cookieSecret,
+    secret: cookieToken,
     resave: true,
     saveUninitialized: true,
   })
 );
-app.use(cookieParser(cookieSecret));
+app.use(cookieParser(cookieToken));
 app.use(passport.initialize());
 app.use(passport.session());
 
