@@ -39,13 +39,13 @@ model Task {
 //  userId String     @unique
 //}
 
-//model User {
-//  id      String      @id @default(uuid())
-//  email   String   @unique
-//  name    String?
+model User {
+  id      String      @id @default(uuid())
+  email   String   @unique
+  name    String?
 //  posts   Task[]
-//  createdAt DateTime @default(now())
-//  updatedAt DateTime @updatedAt
-//  deletedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
 //  profile Profile?
-//}
+}
