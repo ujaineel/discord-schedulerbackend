@@ -22,7 +22,7 @@ app.use(cors());
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET ?? "secretTokenCode",
+    secret: process.env.SESSION_SECRET!,
     resave: true,
     saveUninitialized: true,
   })
