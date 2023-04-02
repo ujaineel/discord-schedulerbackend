@@ -7,9 +7,6 @@ import { appPort } from "@configs/app.config";
 import routes from "@routes/index";
 
 import { type Server } from "http";
-import session from "express-session";
-import cookieParser from "cookie-parser";
-import passport from "passport";
 
 // Falls back to dotenv.config if issues, so sending path as well.
 
@@ -19,17 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 app.use(cors());
-
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET!,
-    resave: true,
-    saveUninitialized: true,
-  })
-);
-app.use(cookieParser(process.env.SESSION_SECRET));
-app.use(passport.initialize());
-app.use(passport.session());
 
 app.use(routes);
 
