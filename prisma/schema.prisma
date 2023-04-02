@@ -41,8 +41,10 @@ model Task {
 
 model User {
   id      String      @id @default(uuid())
-  email   String   @unique
-  name    String?
+  email   String?     @unique
+  username    String
+  password  String
+  type  UserType?   @default(LOCAL)
 //  posts   Task[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
