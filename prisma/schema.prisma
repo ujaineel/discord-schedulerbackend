@@ -41,10 +41,13 @@ model Task {
 
 model User {
   id      String      @id @default(uuid())
-  username  String    @unique
+  email   String?     @unique
+  username    String
   password  String
-//  tasks   Task[]
+  type  UserType?   @default(LOCAL)
+//  posts   Task[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
+//  profile Profile?
 }
