@@ -5,7 +5,7 @@
     "allowJs": true,
     "removeComments": true,
     "resolveJsonModule": true,
-    "typeRoots": ["./node_modules/@types"],
+    "typeRoots": ["./node_modules/@types", "src/utils/types/globals.d.ts"],
     "sourceMap": true,
     "outDir": "dist",
     "strict": true,
@@ -25,7 +25,8 @@
       "@configs/*": ["src/configs/*"],
       "@models/*": ["src/models/*"],
       "@utils/*": ["src/utils/*"],
-      "@root/*": ["./*"]
+      "@root/*": ["./*"],
+      "@modules/*": ["src/modules/*"]
     }
   },
   "include": ["src/**/*", "test/**/*"],

@@ -7,6 +7,11 @@ import { appPort } from "@configs/app.config";
 import routes from "@routes/index";
 
 import { type Server } from "http";
+import session from "express-session";
+import cookieParser from "cookie-parser";
+
+import passport from "passport";
+import authSetup from "@modules/auth/local/passportConfig";
 
 // Falls back to dotenv.config if issues, so sending path as well.
 
@@ -16,6 +21,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 app.use(cors());
+
+const secret =
+  process.env?.SESSION_SECRET ??
+  "oooooeoeroewroewsfjndxvbnfdhjigbdfg4654ertijdbgner";
+
+app.use(
+  session({
+    secret,
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
+app.use(cookieParser(secret));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Local Auth Setup
+authSetup(passport);
 
 app.use(routes);
 

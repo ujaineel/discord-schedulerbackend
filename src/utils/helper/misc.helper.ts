@@ -39,3 +39,18 @@ export const isEmail = (email: any): boolean => {
 
   return validEmailPattern.test(email);
 };
+
+// Exclude keys from user
+export const exclude = (
+  body: Record<any, any>,
+  keys: string[]
+): Omit<Record<any, any>, string> => {
+  const userCopy = { ...body };
+  let key;
+  for (key of keys) {
+    if (key in body) {
+      delete userCopy.key;
+    }
+  }
+  return userCopy;
+};
