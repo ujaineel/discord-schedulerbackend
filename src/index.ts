@@ -11,7 +11,7 @@ import session from "express-session";
 import cookieParser from "cookie-parser";
 
 import passport from "passport";
-import authSetup from "@modules/auth/local/passportConfig";
+import { authSetup } from "./modules/auth/local/passportConfig";
 
 // Falls back to dotenv.config if issues, so sending path as well.
 
@@ -26,15 +26,17 @@ const secret =
   process.env?.SESSION_SECRET ??
   "oooooeoeroewroewsfjndxvbnfdhjigbdfg4654ertijdbgner";
 
+app.use(cookieParser(secret));
+
 app.use(
   session({
     secret,
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    cookie: { httpOnly: false },
   })
 );
 
-app.use(cookieParser(secret));
 app.use(passport.initialize());
 app.use(passport.session());
 

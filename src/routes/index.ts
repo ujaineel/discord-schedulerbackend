@@ -2,6 +2,7 @@ import { type Response, Router } from "express";
 
 import metaRouter from "./meta.routes";
 import taskRouter from "./task.routes";
+import authRouter from "./auth.routes";
 
 import swaggerUI from "swagger-ui-express";
 import swaggerOutput from "@root/swaggerOutput.json";
@@ -16,8 +17,8 @@ router.use("/meta", metaRouter);
 router.use("/tasks", taskRouter);
 
 // USER ROUTES
-
 // AUTH ROUTES
+router.use("/auth", authRouter);
 
 // SWAGGER/OPEN API ROUTE
 router.get(

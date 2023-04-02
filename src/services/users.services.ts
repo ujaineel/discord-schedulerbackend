@@ -7,6 +7,7 @@ import {
 } from "@utils/helper/user.helper";
 import { type LocalUserFetch } from "@utils/types/interfaces";
 import { isEmpty } from "lodash";
+import { hash, genSalt } from "bcrypt";
 
 const getLocalUser = async (options: LocalUserFetch): Promise<User | null> => {
   if (isEmpty(options) || !areValidSearchOptions(options)) {
@@ -33,7 +34,15 @@ const createLocalUser = async (
   }
 
   try {
-    const user = await prismaClient.user.create({ data: createLocalUserDto });
+    const salt: string = await genSalt(10);
+    const hashedPassword: string = await hash(
+      createLocalUserDto.password,
+      salt
+    );
+
+    const user: User = await prismaClient.user.create({
+      data: { ...createLocalUserDto, password: hashedPassword },
+    });
 
     return user;
   } catch (error: any) {

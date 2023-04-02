@@ -11,12 +11,19 @@ const authSetup = (passport: PassportStatic): void => {
       try {
         const user: User | null = await getLocalUser({ username });
         if (user === null) {
-          return done(null, false);
+          done(null, false);
         }
 
-        const matchedPassword = await bcrypt.compare(password, user?.password);
-        if (matchedPassword) {
-          return done(null, exclude(user, ["password"]));
+        if (user?.password !== null && typeof user?.password === "string") {
+          const matchedPassword = await bcrypt.compare(
+            password,
+            user?.password
+          );
+          if (matchedPassword && user !== null) {
+            done(null, exclude(user, ["password"]));
+          } else {
+            done(null, false);
+          }
         }
       } catch (error: any) {
         throw new Error(error);
@@ -24,8 +31,8 @@ const authSetup = (passport: PassportStatic): void => {
     })
   );
 
-  passport.serializeUser((user: Express.User, cb) => {
-    cb(null, exclude(user, ["password"]));
+  passport.serializeUser((user: any, cb) => {
+    cb(null, user.id);
   });
 
   passport.deserializeUser(async (id: string, cb) => {
@@ -42,4 +49,4 @@ const authSetup = (passport: PassportStatic): void => {
   });
 };
 
-export default authSetup;
+export { authSetup };

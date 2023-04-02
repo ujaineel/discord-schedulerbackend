@@ -1,3 +1,5 @@
+import { omit } from "lodash";
+
 export const correctDateValues = (
   object: Record<string, unknown>
 ): Record<any, unknown> => {
@@ -45,12 +47,5 @@ export const exclude = (
   body: Record<any, any>,
   keys: string[]
 ): Omit<Record<any, any>, string> => {
-  const userCopy = { ...body };
-  let key;
-  for (key of keys) {
-    if (key in body) {
-      delete userCopy.key;
-    }
-  }
-  return userCopy;
+  return omit(body, keys);
 };
