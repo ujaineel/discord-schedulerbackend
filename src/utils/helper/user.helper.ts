@@ -1,8 +1,11 @@
 import { type LocalUserFetch } from "@utils/types/interfaces";
 import { isEmail, isvalidUUID } from "./misc.helper";
 
-const areInvalidUserSearchOptions = (options: LocalUserFetch): boolean => {
-  return (isEmail(options.email) ?? true) && (isvalidUUID(options.id) ?? true);
+const areValidSearchOptions = (options: LocalUserFetch): boolean => {
+  return (
+    ("email" in options ? isEmail(options.email) : true) &&
+    ("id" in options ? isvalidUUID(options.id) : true)
+  );
 };
 
 const isValidCreateLocalUserDto = (body: any): boolean => {
@@ -13,4 +16,4 @@ const isValidCreateLocalUserDto = (body: any): boolean => {
   );
 };
 
-export { areInvalidUserSearchOptions, isValidCreateLocalUserDto };
+export { areValidSearchOptions, isValidCreateLocalUserDto };

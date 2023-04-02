@@ -16,7 +16,7 @@ const main = async (): Promise<void> => {
   });
 
   console.log(
-    `Created users: ${task1.title} (${task1.userId} user) and ${task2.title} (${task2.userId} user)`
+    `Created tasks: ${task1.title} (${task1.userId} user) and ${task2.title} (${task2.userId} user)`
   );
 };
 
