@@ -21,8 +21,8 @@ app.use(morgan("dev"));
 app.use(cors());
 
 const secret =
-  process.env?.SESSION_SECRET ??
-  "oooooeoeroewroewsfjndxvbnfdhjigbdfg4654ertijdbgner";
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  process.env.SESSION_SECRET!;
 
 app.use(cookieParser(secret));
 
@@ -31,6 +31,7 @@ app.use(
     secret,
     resave: true,
     saveUninitialized: false,
+    // TODO: Enforcing SSL encryption
     cookie: { httpOnly: false },
   })
 );
