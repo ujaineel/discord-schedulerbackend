@@ -13,8 +13,6 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import { authSetup } from "./modules/auth/local/passportConfig";
 
-// Falls back to dotenv.config if issues, so sending path as well.
-
 export const app = express();
 
 app.use(express.json());
