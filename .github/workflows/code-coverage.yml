@@ -11,6 +11,22 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  migration:
+    runs-on: ubuntu-latest
+    environment: ci
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js v16.11.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: v16.11.0
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Push changes to db
+        run: npx prisma generate && npx prisma db push
+
   base_branch_cov:
     runs-on: ubuntu-latest
     environment: ci
