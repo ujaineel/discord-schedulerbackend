@@ -26,11 +26,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-        # Backup if config() does not work.
-      - name: Pull ENV in
-        id: pullEnv
-        run: npx dotenv-vault pull ci
-
       - name: Run test coverage
         run: npm run test:cov
         env:
@@ -62,11 +57,6 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
-
-        # Backup if config() does not work.
-      - name: Pull ENV in
-        id: pullEnv
-        run: npx dotenv-vault pull ci
 
       - name: Run test coverage
         run: npm run test:cov
