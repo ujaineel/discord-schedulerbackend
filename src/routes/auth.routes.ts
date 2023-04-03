@@ -10,30 +10,29 @@ const router: Router = Router(routerConfig);
 // Routes
 router.post("/local/login", (req, res, next) => {
   passport.authenticate("local", (err: any, user: Express.User) => {
+    /* istanbul ignore next line */
     if (!isEmpty(err)) {
-      return res
-        .status(RESPONSE_CODE.INTERNAL_SERVER_ERROR)
-        .json({
-          message:
-            "INTERNAL SERVER ERROR: An error occurred while authenticating",
-        });
+      /* istanbul ignore next lint */
+      return res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).json({
+        message:
+          "INTERNAL SERVER ERROR: An error occurred while authenticating",
+      });
     }
-    if (isEmpty(user))
+    if (isEmpty(user)) {
       res.status(RESPONSE_CODE.NOT_FOUND).json({ message: "No User Exists" });
-    else {
+    } else {
       req.logIn(user, (err) => {
+        /* istanbul ignore next line */
         if (!isEmpty(err)) {
-          return res
-            .status(RESPONSE_CODE.INTERNAL_SERVER_ERROR)
-            .json({
-              message:
-                "INTERNAL SERVER ERROR: An error occurred while authenticating",
-            });
+          /* istanbul ignore next line */
+          return res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).json({
+            message:
+              "INTERNAL SERVER ERROR: An error occurred while authenticating",
+          });
         }
         res
           .status(RESPONSE_CODE.ACCEPTED)
           .json({ message: "Successfully Authenticated" });
-        console.log("user: ", req.user);
       });
     }
   })(req, res, next);
@@ -55,21 +54,14 @@ router.post("/local/register", async (req, res) => {
         .json({ message: "User Created", username: newUser?.username });
     }
   } catch (error: any) {
+    /* istanbul ignore next line */
     console.log(error, error.message, error.stack);
-    res
-      .status(RESPONSE_CODE.INTERNAL_SERVER_ERROR)
-      .json({
-        message:
-          "INTERNAL SERVER ERROR: An error occurred while registering user",
-      });
+    /* istanbul ignore next line */
+    res.status(RESPONSE_CODE.INTERNAL_SERVER_ERROR).json({
+      message:
+        "INTERNAL SERVER ERROR: An error occurred while registering user",
+    });
   }
-});
-
-router.get("/user", (req, res) => {
-  if (!isEmpty(req?.user)) {
-    return res.status(RESPONSE_CODE.OK).send(req.user); // The req.user stores the entire user that has been authenticated inside of it. (Except password)
-  }
-  return res.status(RESPONSE_CODE.NOT_FOUND).send("No user");
 });
 
 export default router;

@@ -11,22 +11,22 @@ const main = async (): Promise<void> => {
   await prismaClient.task.deleteMany();
   await prismaClient.user.deleteMany();
 
-  const task1 = await prismaClient.task.create({
+  await prismaClient.task.create({
     data: taskFixture,
   });
 
-  const task2 = await prismaClient.task.create({
+  await prismaClient.task.create({
     data: {
       ...createTaskFixture(),
     },
   });
 
-  let user1 = await createLocalUser({
+  const user1 = await createLocalUser({
     username: "testusername1",
     password: "password1",
   });
   if (isEmpty(user1)) {
-    user1 = await prismaClient.user.create({
+    await prismaClient.user.create({
       data: {
         ...createUserFixture(),
         username: "testusername1",
@@ -35,15 +35,15 @@ const main = async (): Promise<void> => {
     });
   }
 
-  const user2 = await prismaClient.user.create({
+  await prismaClient.user.create({
     data: userFixture,
   });
 
-  console.log(
+  /* console.log(
     `Created tasks: ${task1.title} (${task1.userId} user) and ${task2.title} (${task2.userId} user)`
   );
 
-  console.log(`Created User: ${user1.username} and ${user2.username}`);
+  console.log(`Created User: ${user1.username} and ${user2.username}`); */
 };
 
 export default main;

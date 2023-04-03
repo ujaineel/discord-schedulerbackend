@@ -7,6 +7,7 @@ import Sinon from "sinon";
 import request from "supertest";
 import userFixture from "../../../helper/fixtures/users/userFixture.json";
 import * as userServices from "@root/src/services/users.services";
+import { createUserFixture } from "@root/test/helper/fixtures/users/user.fixture";
 
 describe("Auth Routes", () => {
   beforeAll((done) => {
@@ -26,7 +27,7 @@ describe("Auth Routes", () => {
   }, 10000);
 
   describe("POST /auth/local/login", () => {
-    const reqBody: CreateLocalUserDto = {
+    const reqBody = {
       username: "24234211934njfnerfod",
       password: "password1234321",
     };
@@ -95,8 +96,51 @@ describe("Auth Routes", () => {
           "INTERNAL SERVER ERROR: An error occurred while authenticating"
         );
 
-        localUserStub.reset();
+        localUserStub.restore();
       }
     );
+  });
+
+  describe("POST /auth/local/register", () => {
+    beforeEach(() => {
+      Sinon.restore();
+    });
+    const createLocalUserDtoExisting: CreateLocalUserDto = {
+      username: "testusername1",
+      password: "password1",
+    };
+
+    const createLocalUserDtoNew: CreateLocalUserDto = {
+      username: "testusername2",
+      password: "password2",
+    };
+
+    it("should return FORBIDDEN if user already exists", async () => {
+      const { statusCode, text }: { statusCode: number; text: any } =
+        await request(app)
+          .post(`/auth/local/register`)
+          .send(createLocalUserDtoExisting);
+
+      const parsedText = JSON.parse(text)?.message;
+
+      expect(statusCode).toBe(RESPONSE_CODE.FORBIDDEN);
+      expect(parsedText).toEqual("User Already Exists");
+    });
+
+    it("should create new user if user does not exist", async () => {
+      const fixture = createUserFixture(createLocalUserDtoNew);
+      Sinon.stub(userServices, "createLocalUser").resolves(fixture);
+
+      const { statusCode, text }: { statusCode: number; text: any } =
+        await request(app)
+          .post(`/auth/local/register`)
+          .send(createLocalUserDtoNew);
+
+      const parsedText = JSON.parse(text);
+
+      expect(statusCode).toBe(RESPONSE_CODE.CREATED);
+      expect(parsedText?.message).toEqual("User Created");
+      expect(parsedText?.username).toEqual(createLocalUserDtoNew.username);
+    });
   });
 });
