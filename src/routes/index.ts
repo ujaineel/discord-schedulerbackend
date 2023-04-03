@@ -14,6 +14,7 @@ import { ENV } from "@utils/types/app.types";
 
 const router: Router = Router();
 
+/* istanbul ignore next */
 if (env === ENV.PRODUCTION || env === ENV.TESTING || env === ENV.DEVELOPMENT) {
   // set up rate limiter: maximum of five requests per minute
   const limiter = RateLimit({
