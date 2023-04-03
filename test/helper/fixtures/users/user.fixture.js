@@ -1,6 +1,7 @@
 const { faker } = require("@faker-js/faker");
 const bcrypt = require("bcrypt");
 
+/* istanbul ignore file */
 // Storing one as default fixture, but creating this function just in case if needed.
 const createUserFixture = () => {
   const createdAtDate = faker.date.recent(20, "2023-02-01T00:00:00.000Z");
