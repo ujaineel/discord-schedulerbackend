@@ -26,6 +26,8 @@ jobs:
 
       - name: Push changes to db
         run: npx prisma generate && npx prisma db push
+        env:
+          APP_DATABASE_URL: ${{ secrets.APP_DATABASE_URL }}
 
   base_branch_cov:
     runs-on: ubuntu-latest
