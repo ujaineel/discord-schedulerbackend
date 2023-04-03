@@ -3,12 +3,16 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 
-import { appPort } from "@configs/app.config";
+import { appPort, env } from "@configs/app.config";
 import routes from "@routes/index";
 
 import { type Server } from "http";
+import session from "express-session";
+import cookieParser from "cookie-parser";
 
-// Falls back to dotenv.config if issues, so sending path as well.
+import passport from "passport";
+import { authSetup } from "./modules/auth/local/passportConfig";
+import { ENV } from "@utils/types/app.types";
 
 export const app = express();
 
@@ -16,6 +20,28 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
 app.use(cors());
+
+const secret =
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  process.env.SESSION_SECRET!;
+
+app.use(cookieParser(secret));
+
+app.use(
+  session({
+    secret,
+    resave: true,
+    saveUninitialized: false,
+    // TODO: Enforcing SSL encryption
+    cookie: { httpOnly: !(env === ENV.CI || env === ENV.DEVELOPMENT) },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Local Auth Setup
+authSetup(passport);
 
 app.use(routes);
 

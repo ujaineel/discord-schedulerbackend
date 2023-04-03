@@ -1,3 +1,5 @@
+import { omit } from "lodash";
+
 export const correctDateValues = (
   object: Record<string, unknown>
 ): Record<any, unknown> => {
@@ -38,4 +40,12 @@ export const isEmail = (email: any): boolean => {
     /^[\w\-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
 
   return validEmailPattern.test(email);
+};
+
+// Exclude keys from user
+export const exclude = (
+  body: Record<any, any>,
+  keys: string[]
+): Omit<Record<any, any>, string> => {
+  return omit(body, keys);
 };
