@@ -3,7 +3,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 
-import { appPort } from "@configs/app.config";
+import { appPort, env } from "@configs/app.config";
 import routes from "@routes/index";
 
 import { type Server } from "http";
@@ -12,6 +12,7 @@ import cookieParser from "cookie-parser";
 
 import passport from "passport";
 import { authSetup } from "./modules/auth/local/passportConfig";
+import { ENV } from "@utils/types/app.types";
 
 export const app = express();
 
@@ -32,7 +33,7 @@ app.use(
     resave: true,
     saveUninitialized: false,
     // TODO: Enforcing SSL encryption
-    cookie: { httpOnly: false },
+    cookie: { httpOnly: !(env === ENV.CI || env === ENV.DEVELOPMENT) },
   })
 );
 
