@@ -51,3 +51,10 @@ model User {
   deletedAt DateTime?
 //  profile Profile?
 }
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt   DateTime
+}

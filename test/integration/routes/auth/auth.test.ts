@@ -62,7 +62,7 @@ describe("Auth Routes", () => {
 
       const parsedText = JSON.parse(text)?.message;
 
-      expect(statusCode).toEqual(RESPONSE_CODE.ACCEPTED);
+      expect(statusCode).toEqual(RESPONSE_CODE.OK);
       expect(parsedText).toEqual("Successfully Authenticated");
     });
 

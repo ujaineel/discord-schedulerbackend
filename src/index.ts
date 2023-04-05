@@ -1,3 +1,4 @@
+import { configFn } from "./main";
 import express from "express";
 
 import morgan from "morgan";
@@ -9,17 +10,31 @@ import routes from "@routes/index";
 import { type Server } from "http";
 import session from "express-session";
 import cookieParser from "cookie-parser";
+import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 
 import passport from "passport";
 import { authSetup } from "./modules/auth/local/passportConfig";
 import { ENV } from "@utils/types/app.types";
+import { PrismaClient } from "@prisma/client";
 
+configFn();
 export const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
+
+const store = new PrismaSessionStore(new PrismaClient(), {
+  checkPeriod: 2 * 60 * 1000,
+  dbRecordIdIsSessionId: true,
+  dbRecordIdFunction: undefined,
+});
 
 const secret =
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -29,11 +44,17 @@ app.use(cookieParser(secret));
 
 app.use(
   session({
+    store,
     secret,
-    resave: true,
+    resave: false,
     saveUninitialized: false,
     // TODO: Enforcing SSL encryption
-    cookie: { httpOnly: !(env === ENV.CI || env === ENV.DEVELOPMENT) },
+    cookie: {
+      httpOnly: !(env === ENV.CI || env === ENV.DEVELOPMENT),
+      secure: !(env === ENV.CI || env === ENV.DEVELOPMENT),
+      sameSite: false,
+      maxAge: 1000 * 60 * 60 * 24,
+    },
   })
 );
 
