@@ -28,7 +28,7 @@
     "testenv:integration": "NODE_ENV=testing dotenv -e ./env/.env.testing -- concurrently \"npm run docker:up\" \"npx prisma migrate deploy\" \"jest  --testPathPattern=test/integration --maxWorkers=1 --passWithNoTests\"",
     "test:integration:watch": "jest --watchAll --testPathPattern=/test/integration --passWithNoTests",
     "test:cov:local": "concurrently \"npm run docker:up\" \"npx prisma migrate deploy\" \"jest --coverage --testPathPattern=test/integration --maxWorkers=1 --passWithNoTests\" \"npm run docker:down\"",
-    "test:cov": "jest --coverage --maxWorkers=1 --passWithNoTests",
+    "test:cov": "jest --coverage --passWithNoTests --detectOpenHandles",
     "update:env:file": "npx dotenv-vault push $env ./env/.env.$nodeEnv"
   },
   "keywords": [],
