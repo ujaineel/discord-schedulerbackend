@@ -23,7 +23,7 @@
     "swagger": "ts-node ./src/api-docs/swagger.mjs",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "test:unit": "jest --testPathPattern=/test/unit --detectOpenHandles --passWithNoTests",
+    "test:unit": "jest --testPathPattern=/test/unit --forceExit --passWithNoTests",
     "test:unit:watch": "jest --watchAll --testPathPattern=/test/unit --passWithNoTests",
     "testenv:integration": "NODE_ENV=testing dotenv -e ./env/.env.testing -- concurrently \"npm run docker:up\" \"npx prisma migrate deploy\" \"jest  --testPathPattern=test/integration --maxWorkers=1 --passWithNoTests\"",
     "test:integration:watch": "jest --watchAll --testPathPattern=/test/integration --passWithNoTests",
