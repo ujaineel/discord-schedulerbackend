@@ -13,7 +13,7 @@ concurrency:
 jobs:
   migration:
     runs-on: ubuntu-latest
-    environment: ci
+    environment: $NODE_ENV
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js v16.11.0
@@ -31,7 +31,7 @@ jobs:
 
   base_branch_cov:
     runs-on: ubuntu-latest
-    environment: ci
+    environment: $NODE_ENV
     needs: migration
     steps:
       - uses: actions/checkout@v3
@@ -59,7 +59,7 @@ jobs:
 
   checks:
     runs-on: ubuntu-latest
-    environment: ci
+    environment: $NODE_ENV
     needs: base_branch_cov
     steps:
       - uses: actions/checkout@v3
