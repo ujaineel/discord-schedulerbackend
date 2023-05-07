@@ -10,12 +10,11 @@ import routes from "@routes/index";
 import { type Server } from "http";
 import session from "express-session";
 import cookieParser from "cookie-parser";
-import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 
 import passport from "passport";
 import { authSetup } from "./modules/auth/local/passportConfig";
 import { ENV } from "@utils/types/app.types";
-import { PrismaClient } from "@prisma/client";
+import { store } from "@configs/db.config";
 
 configFn();
 export const app = express();
@@ -29,12 +28,6 @@ app.use(
     credentials: true,
   })
 );
-
-const store = new PrismaSessionStore(new PrismaClient(), {
-  checkPeriod: 2 * 60 * 1000,
-  dbRecordIdIsSessionId: true,
-  dbRecordIdFunction: undefined,
-});
 
 const secret =
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

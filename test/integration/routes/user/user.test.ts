@@ -1,4 +1,4 @@
-import prismaClient from "@configs/db.config";
+import prismaClient, { store } from "@configs/db.config";
 import server, { app } from "@root/src";
 import { getLocalUser } from "@root/src/services/users.services";
 import { correctDateValues, exclude } from "@utils/helper/misc.helper";
@@ -17,6 +17,7 @@ describe("User Routes", () => {
 
   afterAll(async () => {
     await prismaClient.$disconnect();
+    await store.shutdown();
   }, 10000);
 
   afterEach(() => {

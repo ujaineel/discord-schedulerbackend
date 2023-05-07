@@ -1,4 +1,4 @@
-import prismaClient from "@configs/db.config";
+import prismaClient, { store } from "@configs/db.config";
 import server, { app } from "@root/src";
 import main from "@root/test/helper/setup/setup-db";
 import { type CreateLocalUserDto } from "@utils/dtos/users.dtos";
@@ -8,6 +8,7 @@ import request from "supertest";
 import userFixture from "../../../helper/fixtures/users/userFixture.json";
 import * as userServices from "@root/src/services/users.services";
 import { createUserFixture } from "@root/test/helper/fixtures/users/user.fixture";
+import { type User } from "@prisma/client";
 
 describe("Auth Routes", () => {
   beforeAll((done) => {
@@ -20,6 +21,8 @@ describe("Auth Routes", () => {
 
   afterAll(async () => {
     await prismaClient.$disconnect();
+    server.close();
+    await store.shutdown();
   }, 10000);
 
   afterEach(() => {
@@ -128,7 +131,7 @@ describe("Auth Routes", () => {
     });
 
     it("should create new user if user does not exist", async () => {
-      const fixture = createUserFixture(createLocalUserDtoNew);
+      const fixture = createUserFixture(createLocalUserDtoNew) as User;
       Sinon.stub(userServices, "createLocalUser").resolves(fixture);
 
       const { statusCode, text }: { statusCode: number; text: any } =
