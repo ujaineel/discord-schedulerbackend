@@ -50,8 +50,8 @@ app.use(
     saveUninitialized: false,
     // TODO: Enforcing SSL encryption
     cookie: {
-      httpOnly: !(env === ENV.CI || env === ENV.DEVELOPMENT),
-      secure: !(env === ENV.CI || env === ENV.DEVELOPMENT),
+      httpOnly: !(env === ENV.PRODUCTION),
+      secure: env === ENV.PRODUCTION,
       sameSite: false,
       maxAge: 1000 * 60 * 60 * 24,
     },

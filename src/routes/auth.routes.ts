@@ -32,10 +32,6 @@ router.post("/local/login", (req, res, next) => {
         }
         res
           .status(RESPONSE_CODE.OK)
-          .cookie("userAuth", req.session.id, {
-            maxAge: 1000 * 60 * 60 * 24,
-            signed: true,
-          })
           .json({ message: "Successfully Authenticated" });
       });
     }
