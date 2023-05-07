@@ -39,9 +39,15 @@ describe("User Routes", () => {
         .post("/auth/local/login")
         .send({ username: "testusername1", password: "password1" });
       const cookies = response.headers["set-cookie"];
+<<<<<<< HEAD
       console.log(cookies);
       const { statusCode, text }: { statusCode: number; text: any } =
         await request(app).get("/user").set("Cookie", cookies);
+=======
+
+      const { statusCode, text }: { statusCode: number; text: any } =
+        await request(app).get("/user").set("Cookie", [cookies]);
+>>>>>>> main
 
       const expectedUserValues = correctDateValues(JSON.parse(text)?.data);
       const actualUserValues = exclude(
