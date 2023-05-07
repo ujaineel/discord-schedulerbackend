@@ -64,10 +64,6 @@ app.use(passport.session());
 // Local Auth Setup
 authSetup(passport);
 
-const secret =
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  process.env.SESSION_SECRET!;
-
 app.use(cookieParser(secret));
 
 app.use(
