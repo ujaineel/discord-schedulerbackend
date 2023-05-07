@@ -4,9 +4,11 @@ import * as userServices from "@root/src/services/users.services";
 import userFixture from "../../../helper/fixtures/users/userFixture.json";
 import { correctDateValues, exclude } from "@utils/helper/misc.helper";
 import { prismaSessionStoreMock } from "@root/test/helper/singleton";
+import { store } from "@configs/db.config";
 
 describe("Local Auth", () => {
   afterAll(async () => {
+    await store.shutdown();
     await prismaSessionStoreMock.shutdown();
   });
 

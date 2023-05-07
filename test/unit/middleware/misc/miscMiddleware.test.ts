@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-for-in-array */
-import prismaClient from "@configs/db.config";
+import prismaClient, { store } from "@configs/db.config";
 import {
   prismaMock,
   prismaSessionStoreMock,
@@ -25,6 +25,7 @@ describe("Misc Middlewares", () => {
     afterAll(async () => {
       await prismaMock.$disconnect();
       await prismaClient.$disconnect();
+      await store.shutdown();
       await prismaSessionStoreMock.shutdown();
     });
 
