@@ -1,4 +1,4 @@
-import { prismaMock } from "../../helper/singleton";
+import { prismaMock, prismaSessionStoreMock } from "../../helper/singleton";
 import taskFixture from "../../helper/fixtures/tasks/taskFixture.json";
 import {
   deleteTask,
@@ -15,6 +15,7 @@ describe("Task Service", () => {
   afterAll(async () => {
     await prismaMock.$disconnect();
     await prismaClient.$disconnect();
+    await prismaSessionStoreMock.shutdown();
   });
   describe("getTask", () => {
     const id: string = "test-id";

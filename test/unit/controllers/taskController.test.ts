@@ -1,4 +1,7 @@
-import { prismaMock } from "@root/test/helper/singleton";
+import {
+  prismaMock,
+  prismaSessionStoreMock,
+} from "@root/test/helper/singleton";
 import taskController from "@controllers/tasks.controllers";
 import httpMocks from "node-mocks-http";
 import { RESPONSE_CODE } from "@utils/types/response.types";
@@ -77,6 +80,7 @@ describe("Tasks Controllers - Unit", () => {
 
     afterAll(async () => {
       await prismaMock.$disconnect();
+      await prismaSessionStoreMock.shutdown();
     });
 
     it("should return with 500 response if error occurs", async () => {
