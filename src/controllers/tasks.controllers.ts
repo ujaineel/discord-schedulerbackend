@@ -39,7 +39,7 @@ const getTaskController = async (
     const task: Task | null = await getTask(id);
 
     if (task?.userId !== userId) {
-      res.status(RESPONSE_CODE.FORBIDDEN).json({ message: "Forbidden" });
+      res.status(RESPONSE_CODE.NOT_FOUND).json({ message: "Not Found" });
       return;
     }
 
@@ -162,30 +162,37 @@ const patchTaskController = async (
    *  }
    * }
    */
-
-  const id = req.params?.id;
-  if (!isvalidUUID(id)) {
-    // #swagger.responses[400] = { description: 'Bad Request. Please check if data provided is proper' }
-    res.status(RESPONSE_CODE.BAD_REQUEST).json({
-      message: "Bad request. Please check if id is of UUID type",
-    });
-
-    console.log(`Invalid UUID for task: ${id}`);
-    return;
-  }
-
-  const patchTaskDto = req.body;
-  if (!isPatchTaskDto(req.body)) {
-    // #swagger.responses[400] = { description: 'Bad Request. Please check if data provided is proper' }
-    res.status(RESPONSE_CODE.BAD_REQUEST).json({
-      message: "Bad request. Please check if data provided is proper",
-    });
-
-    console.log(JSON.stringify(patchTaskDto));
-    return;
-  }
-
   try {
+    const id = req.params?.id;
+    const userId = req?.user?.id;
+    if (!isvalidUUID(id)) {
+      // #swagger.responses[400] = { description: 'Bad Request. Please check if data provided is proper' }
+      res.status(RESPONSE_CODE.BAD_REQUEST).json({
+        message: "Bad request. Please check if id is of UUID type",
+      });
+
+      console.log(`Invalid UUID for task: ${id}`);
+      return;
+    } else if (userId === undefined) {
+      res.status(RESPONSE_CODE.FORBIDDEN).json({ message: "Cannot find user" });
+    }
+
+    const patchTaskDto = req.body;
+    if (!isPatchTaskDto(req.body)) {
+      // #swagger.responses[400] = { description: 'Bad Request. Please check if data provided is proper' }
+      res.status(RESPONSE_CODE.BAD_REQUEST).json({
+        message: "Bad request. Please check if data provided is proper",
+      });
+
+      console.log(JSON.stringify(patchTaskDto));
+      return;
+    }
+
+    const oldTask: Task | null = await getTask(id);
+    if (oldTask !== null && oldTask.userId !== userId) {
+      res.status(RESPONSE_CODE.NOT_FOUND).json({ message: "Task Not Found" });
+    }
+
     const task: Task = await patchTask({ id, patchTaskDto });
 
     // #swagger.responses[200] = { description: 'Task Patched/Updated', schema: { $ref: '#/definition/Task' }}
@@ -213,19 +220,25 @@ const deleteTaskController = async (
    *  required: true,
    * }
    */
-
-  const id = req.params?.id;
-  if (!isvalidUUID(id)) {
-    // #swagger.responses[400] = { description: 'Bad Request. Please check if data provided is proper' }
-    res.status(RESPONSE_CODE.BAD_REQUEST).json({
-      message: "Bad request. Please check if id is of UUID type",
-    });
-
-    console.log(`Invalid UUID for task: ${id}`);
-    return;
-  }
-
   try {
+    const id = req.params?.id;
+    const userId = req?.user?.id;
+
+    if (!isvalidUUID(id)) {
+      // #swagger.responses[400] = { description: 'Bad Request. Please check if data provided is proper' }
+      res.status(RESPONSE_CODE.BAD_REQUEST).json({
+        message: "Bad request. Please check if id is of UUID type",
+      });
+
+      console.log(`Invalid UUID for task: ${id}`);
+      return;
+    }
+
+    const taskToDelete: Task | null = await getTask(id);
+    if (taskToDelete !== null && taskToDelete.userId !== userId) {
+      res.status(RESPONSE_CODE.NOT_FOUND).json({ message: "Task Not Found" });
+    }
+
     // #swagger.responses[200] = { description: 'Task Deleted' }
     const task = await deleteTask(id);
 
