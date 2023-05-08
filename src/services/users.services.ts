@@ -46,7 +46,7 @@ const createLocalUser = async (
 
     return user;
   } catch (error: any) {
-    console.error(error, error.message, error.stack);
+    console.error(error, error?.message, error?.stack);
     throw new Error("An error occurred while trying to create user");
   }
 };

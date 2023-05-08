@@ -1,3 +1,4 @@
+import { configFn } from "./main";
 import express from "express";
 
 import morgan from "morgan";
@@ -13,17 +14,48 @@ import cookieParser from "cookie-parser";
 import passport from "passport";
 import { authSetup } from "./modules/auth/local/passportConfig";
 import { ENV } from "@utils/types/app.types";
+import { store } from "@configs/db.config";
 
+configFn();
 export const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(morgan("dev"));
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 
 const secret =
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   process.env.SESSION_SECRET!;
+
+app.use(cookieParser(secret));
+
+app.use(
+  session({
+    store,
+    secret,
+    resave: false,
+    saveUninitialized: false,
+    // TODO: Enforcing SSL encryption
+    cookie: {
+      httpOnly: !(env === ENV.PRODUCTION),
+      secure: env === ENV.PRODUCTION,
+      sameSite: false,
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Local Auth Setup
+authSetup(passport);
 
 app.use(cookieParser(secret));
 

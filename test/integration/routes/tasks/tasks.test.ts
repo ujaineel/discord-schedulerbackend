@@ -5,7 +5,7 @@ import taskFixture from "../../../helper/fixtures/tasks/taskFixture.json";
 import createTaskDtoFixture from "@root/test/helper/fixtures/tasks/createTaskDtoFixture.json";
 import patchTaskDtoFixture from "@root/test/helper/fixtures/tasks/patchTaskDtoFixture.json";
 import main from "../../../helper/setup/setup-db";
-import prismaClient from "../../../../src/configs/db.config";
+import prismaClient, { store } from "../../../../src/configs/db.config";
 import { type Task } from "@prisma/client";
 import { randomUUID } from "crypto";
 
@@ -20,6 +20,7 @@ describe("Tasks routes", () => {
 
   afterAll(async () => {
     await prismaClient.$disconnect();
+    await store.shutdown();
   }, 10000);
 
   afterEach(() => {

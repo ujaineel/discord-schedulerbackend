@@ -1,4 +1,4 @@
-import prismaClient from "@configs/db.config";
+import prismaClient, { store } from "@configs/db.config";
 import server, { app } from "@root/src";
 import { getLocalUser } from "@root/src/services/users.services";
 import { correctDateValues, exclude } from "@utils/helper/misc.helper";
@@ -17,6 +17,7 @@ describe("User Routes", () => {
 
   afterAll(async () => {
     await prismaClient.$disconnect();
+    await store.shutdown();
   }, 10000);
 
   afterEach(() => {
@@ -41,7 +42,7 @@ describe("User Routes", () => {
       const cookies = response.headers["set-cookie"];
 
       const { statusCode, text }: { statusCode: number; text: any } =
-        await request(app).get("/user").set("Cookie", [cookies]);
+        await request(app).get("/user").set("Cookie", cookies);
 
       const expectedUserValues = correctDateValues(JSON.parse(text)?.data);
       const actualUserValues = exclude(

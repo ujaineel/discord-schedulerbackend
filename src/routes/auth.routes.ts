@@ -31,7 +31,7 @@ router.post("/local/login", (req, res, next) => {
           });
         }
         res
-          .status(RESPONSE_CODE.ACCEPTED)
+          .status(RESPONSE_CODE.OK)
           .json({ message: "Successfully Authenticated" });
       });
     }

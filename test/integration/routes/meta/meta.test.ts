@@ -1,4 +1,4 @@
-import prismaClient from "@configs/db.config";
+import prismaClient, { store } from "@configs/db.config";
 import request from "supertest";
 import server, { app } from "../../../../src/index";
 import { RESPONSE_CODE } from "../../../../src/utils/types/response.types";
@@ -7,6 +7,10 @@ describe("meta routes", () => {
   afterEach(async () => {
     await prismaClient.$disconnect();
     server.close();
+  });
+
+  afterAll(async () => {
+    await store.shutdown();
   });
 
   describe("GET /meta", () => {

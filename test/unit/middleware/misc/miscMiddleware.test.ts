@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-for-in-array */
-import prismaClient from "@configs/db.config";
-import { prismaMock } from "@root/test/helper/singleton";
+import prismaClient, { store } from "@configs/db.config";
+import {
+  prismaMock,
+  prismaSessionStoreMock,
+} from "@root/test/helper/singleton";
 import httpMocks from "node-mocks-http";
 
 describe("Misc Middlewares", () => {
@@ -22,6 +25,8 @@ describe("Misc Middlewares", () => {
     afterAll(async () => {
       await prismaMock.$disconnect();
       await prismaClient.$disconnect();
+      await store.shutdown();
+      await prismaSessionStoreMock.shutdown();
     });
 
     it("should move with next fn if env is not production", async () => {

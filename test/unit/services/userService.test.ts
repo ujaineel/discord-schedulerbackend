@@ -1,4 +1,4 @@
-import { prismaMock } from "../../helper/singleton";
+import { prismaMock, prismaSessionStoreMock } from "../../helper/singleton";
 import { type User } from "@prisma/client";
 import {
   createLocalUser,
@@ -10,6 +10,10 @@ import userFixture from "../../helper/fixtures/users/userFixture.json";
 import { type CreateLocalUserDto } from "@utils/dtos/users.dtos";
 
 describe("User Services", () => {
+  afterAll(async () => {
+    await prismaSessionStoreMock.shutdown();
+  });
+
   describe("getLocalUser", () => {
     const invalidId: string = "23234";
     const invalidEmail: string = "23234";
