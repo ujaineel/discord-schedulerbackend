@@ -25,18 +25,23 @@ const getTaskController = async (
    *  required: true,
    * }
    */
-
-  const id = req.params?.id;
-  if (!isvalidUUID(id)) {
-    // #swagger.responses[400] = { description: 'Bad Request. Please check if id is provided' }
-    res
-      .status(RESPONSE_CODE.BAD_REQUEST)
-      .json({ message: "Invalid request. Provide proper id" });
-    return;
-  }
-
   try {
+    const id = req.params?.id;
+    const userId = req.user?.id;
+    if (!isvalidUUID(id)) {
+      // #swagger.responses[400] = { description: 'Bad Request. Please check if id is provided' }
+      res
+        .status(RESPONSE_CODE.BAD_REQUEST)
+        .json({ message: "Invalid request. Provide proper id" });
+      return;
+    }
+
     const task: Task | null = await getTask(id);
+
+    if (task?.userId !== userId) {
+      res.status(RESPONSE_CODE.FORBIDDEN).json({ message: "Forbidden" });
+      return;
+    }
 
     if (isEmpty(task)) {
       // #swagger.responses[200] = { description: 'No Task Found.' }
@@ -93,19 +98,19 @@ const postTaskController = async (
    *  }
    * }
    */
-
-  const createTaskDto = req.body;
-  if (!isCreateTaskDto(req.body)) {
-    // #swagger.responses[400] = { description: 'Bad Request. Please check if data provided is proper' }
-    res.status(RESPONSE_CODE.BAD_REQUEST).json({
-      message: "Bad request. Please check if data provided is proper",
-    });
-
-    console.log(JSON.stringify(createTaskDto));
-    return;
-  }
-
   try {
+    const createTaskDto = { ...req.body, userId: req?.user?.id };
+
+    if (!isCreateTaskDto(createTaskDto)) {
+      // #swagger.responses[400] = { description: 'Bad Request. Please check if data provided is proper' }
+      res.status(RESPONSE_CODE.BAD_REQUEST).json({
+        message: "Bad request. Please check if data provided is proper",
+      });
+
+      console.log(JSON.stringify(createTaskDto));
+      return;
+    }
+
     const task: Task = await postTask(createTaskDto);
 
     // #swagger.responses[201] = { description: 'Task Created', schema: { $ref: '#/definition/Task' }}
